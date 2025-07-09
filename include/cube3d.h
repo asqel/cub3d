@@ -6,7 +6,7 @@
 /*   By: axlleres <axlleres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 15:43:16 by lucmansa          #+#    #+#             */
-/*   Updated: 2025/07/09 18:00:53 by axlleres         ###   ########.fr       */
+/*   Updated: 2025/07/09 19:30:21 by axlleres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ void	*ft_calloc(size_t size);
 void	*ft_realloc(void *ptr, size_t size, int do_zero);
 void	*ft_malloc(size_t size);
 void	ft_free(void *ptr);
+
+int		ft_strcount(char *text, int c);
 
 
 #endif
