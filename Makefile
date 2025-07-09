@@ -4,7 +4,7 @@ MLX_NAME = libmlx.a
 SRC = $(wildcard src/*.c src/*/*.c src/*/*/*.c src/*/*/*/*.c) main.c
 OBJ = ${SRC:.c=.o}
 
-NAME = cube3D
+NAME = cub3D
 
 CC = cc
 LD = cc
