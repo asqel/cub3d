@@ -6,7 +6,7 @@
 /*   By: axlleres <axlleres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 16:24:49 by lucmansa          #+#    #+#             */
-/*   Updated: 2025/07/09 18:00:42 by axlleres         ###   ########.fr       */
+/*   Updated: 2025/07/09 19:20:04 by axlleres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,5 +19,5 @@ int	parser(char *map)
 	file = read_file(map);
 	if (!file)
 		c3d_print_err();
-
+	return (0);
 }
