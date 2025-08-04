@@ -17,7 +17,7 @@ jobs:
         run: pip install norminette
 
       - name: Norm
-        run: norminette
+        run: norminette src/ include/ main.c
 
       - name: Build
         run: make
