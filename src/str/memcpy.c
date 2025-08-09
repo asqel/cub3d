@@ -1,23 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
+/*   memcpy.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: axlleres <axlleres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/09 16:24:49 by lucmansa          #+#    #+#             */
-/*   Updated: 2025/07/09 19:20:04 by axlleres         ###   ########.fr       */
+/*   Created: 2025/07/10 17:05:57 by axlleres          #+#    #+#             */
+/*   Updated: 2025/07/10 17:07:00 by axlleres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube3d.h"
 
-int	parser(char *map)
+void ft_memcpy(char *dest, const char *src, int len)
 {
-	char *file;
-
-	file = read_file(map);
-	if (!file)
-		c3d_print_err();
-	return (0);
+	while (len-- > 0)
+		dest[len] = src[len];
 }

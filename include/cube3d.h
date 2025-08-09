@@ -6,7 +6,7 @@
 /*   By: axlleres <axlleres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 15:43:16 by lucmansa          #+#    #+#             */
-/*   Updated: 2025/07/10 02:22:20 by axlleres         ###   ########.fr       */
+/*   Updated: 2025/08/09 16:01:01 by axlleres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,14 @@ typedef struct s_img
 {
 	int width;
 	int height;
-	uint32_t *data;
+	uint32_t *data; // stored in collumns
 } t_img;
 
 typedef struct s_mlx
 {
 	void	*mlx;
 	void	*win;
-	t_img	wall_textures[4];
-
-
+	void	*backbuffer;
 } t_mlx;
 
 typedef struct s_game
@@ -46,10 +44,25 @@ typedef struct s_game
 	char **map;
 	int map_height;
 	int map_width;
+	t_img textures[4];
+	double player_x;
+	double player_y;
+	double rot;
+	int key_pressed[6]; // w a s d
 } t_game;
 
-# define WIN_HEIGHT 500
-# define WIN_WIDTH 500
+typedef struct s_ray
+{
+	double x;
+	double y;
+	double old_x;
+	double old_y;
+	double rot;
+	int face_hit;
+	double dist;
+} t_ray;
+# define WIN_WIDTH 1000
+# define WIN_HEIGHT 700
 
 //err
 # define ERR_NONE 0
@@ -71,5 +84,8 @@ void	ft_free(void *ptr);
 
 int		ft_strcount(char *text, int c);
 char **ft_split_lines(char *text, int *len);
+
+void ft_memcpy(char *dest, const char *src, int len);
+int c3d_load_texture(void *mlx, char *path, t_img *img);
 
 #endif

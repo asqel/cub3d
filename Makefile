@@ -15,7 +15,7 @@ LDFLAGS = -lm -lX11 -lXext
 all: $(NAME)
 
 $(NAME): $(OBJ) $(MLX_PATH)/$(MLX_NAME)
-	$(LD) $(LDFLAGS) -o $(NAME) $^ $(MLX_PATH)/$(MLX_NAME)
+	$(LD) -o $(NAME) $^ $(MLX_PATH)/$(MLX_NAME) $(LDFLAGS)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -o $@ -c $<
