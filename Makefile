@@ -21,10 +21,11 @@ $(NAME): $(OBJ) $(MLX_PATH)/$(MLX_NAME)
 	$(CC) $(CFLAGS) -o $@ -c $<
 
 $(MLX_PATH)/$(MLX_NAME):
-	$(MAKE) -C $(MLX_PATH)
+	make -C $(MLX_PATH)
 
 clean:
 	rm -rf $(OBJ)
+	make -C $(MLX_PATH) clean
 
 fclean: clean
 	rm -rf $(NAME)
