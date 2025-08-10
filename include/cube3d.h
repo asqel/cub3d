@@ -6,7 +6,7 @@
 /*   By: axlleres <axlleres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 15:43:16 by lucmansa          #+#    #+#             */
-/*   Updated: 2025/08/09 16:01:01 by axlleres         ###   ########.fr       */
+/*   Updated: 2025/08/10 13:48:18 by axlleres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ typedef struct s_game
 	double player_x;
 	double player_y;
 	double rot;
-	int key_pressed[6]; // w a s d
+	int key_pressed[256]; // w a s d
 } t_game;
 
 typedef struct s_ray
@@ -60,6 +60,7 @@ typedef struct s_ray
 	double rot;
 	int face_hit;
 	double dist;
+	double texture_percent;
 } t_ray;
 # define WIN_WIDTH 1000
 # define WIN_HEIGHT 700
