@@ -6,7 +6,7 @@
 /*   By: axlleres <axlleres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 15:43:16 by lucmansa          #+#    #+#             */
-/*   Updated: 2025/08/10 13:48:18 by axlleres         ###   ########.fr       */
+/*   Updated: 2025/08/10 23:20:52 by axlleres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,12 @@ typedef struct s_ray
 	double dist;
 	double texture_percent;
 } t_ray;
+
+# define DIR_NORTH 0
+# define DIR_EAST 1
+# define DIR_SOUTH 2
+# define DIR_WEST 3
+
 # define WIN_WIDTH 1000
 # define WIN_HEIGHT 700
 
