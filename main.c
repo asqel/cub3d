@@ -118,7 +118,7 @@ void get_ray(t_game *game, t_ray *rays) {
 				rays[i].face_hit = DIR_SOUTH;
 			}
 		}
-
+		rays[i].dist *= cos(angle - game->rot);
 	}
 }
 
@@ -269,10 +269,10 @@ int	main(int argc, char **argv)
 	};
 	game.map_height = 16;
 	game.map_width  = 24;
-	c3d_load_texture(mlx.mlx, "assets/north.xpm", &game.textures[DIR_NORTH]);
-	c3d_load_texture(mlx.mlx, "assets/east.xpm", &game.textures[DIR_EAST]);
-	c3d_load_texture(mlx.mlx, "assets/south.xpm", &game.textures[DIR_SOUTH]);
-	c3d_load_texture(mlx.mlx, "assets/west.xpm", &game.textures[DIR_WEST]);
+	c3d_load_texture(mlx.mlx, "assets/grass.xpm", &game.textures[DIR_NORTH]);
+	c3d_load_texture(mlx.mlx, "assets/dragon.xpm", &game.textures[DIR_EAST]);
+	c3d_load_texture(mlx.mlx, "assets/grass.xpm", &game.textures[DIR_SOUTH]);
+	c3d_load_texture(mlx.mlx, "assets/dragon.xpm", &game.textures[DIR_WEST]);
 	mlx_mouse_hide(mlx.mlx, mlx.win);
 
 	mlx_hook(mlx.win, KeyPress, KeyPressMask, key_pressed, &game);
