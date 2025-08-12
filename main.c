@@ -3,23 +3,44 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: axlleres <axlleres@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucmansa <lucmansa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 15:29:31 by lucmansa          #+#    #+#             */
-/*   Updated: 2025/07/10 00:56:28 by axlleres         ###   ########.fr       */
+/*   Updated: 2025/08/12 16:29:28 by lucmansa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube3d.h"
 #include <mlx.h>
 
+void prnt_map(char **map)
+{
+	int i;
+
+	i = -1;
+	while (map[++i])
+		printf("%s\n", map[i]);
+}
+
 int	main(int argc, char **argv)
 {
-	t_mlx mlx;
+	char **map;
+	t_game game;
 
 	(void)argc;
-	(void)argv;
-	mlx.mlx = mlx_init();
-	mlx.win = mlx_new_window(mlx.mlx, WIN_WIDTH, WIN_HEIGHT, "Cube3D");
-	mlx_loop(mlx.mlx);
+	game.img_path[0] = 0;
+	game.img_path[1] = 0;
+	game.img_path[2] = 0;
+	game.img_path[3] = 0;
+	game.cell = 0;
+	game.flor = 0;
+	map = read_map(argv[1]);
+	prnt_map(map);
+	map = get_texture(&game, map);
+	printf("-----------\n");
+	printf("NO path : %s\n", game.img_path[0]);
+	printf("SO path : %s\n", game.img_path[1]);
+	printf("-----------\n");
+	prnt_map(map);
+		
 }
