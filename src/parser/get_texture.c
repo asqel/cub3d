@@ -6,7 +6,7 @@
 /*   By: lucmansa <lucmansa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 15:55:21 by lucmansa          #+#    #+#             */
-/*   Updated: 2025/08/12 16:52:48 by lucmansa         ###   ########.fr       */
+/*   Updated: 2025/08/12 17:16:59 by lucmansa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,32 +60,32 @@ char	*get_str(char *seg, int i)
 	return (res);
 }
 
-char **get_texture(t_game *game, char **map)
+void	get_texture(t_game *game)
 {
 	int i;
 
 	i = 0;
-	while ((!game->img_path[0] || !game->img_path[1] || !game->img_path[2] || !game->img_path[3] || !game->cell || !game->flor) && map[i])
+	while ((!game->img_path[0] || !game->img_path[1] || !game->img_path[2]
+		|| !game->img_path[3] || !game->cell || !game->flor) && game->map[i])
 	{
-		if (map[i][0] == 'N' && map[i][1] == 'O' && map[i][2] == ' ')
-			game->img_path[0] = get_str(map[i], 2);
-		else if (map[i][0] == 'S' && map[i][1] == 'O' && map[i][2] == ' ')
-			game->img_path[1] = get_str(map[i], 2);
-		else if (map[i][0] == 'W' && map[i][1] == 'E' && map[i][2] == ' ')
-			game->img_path[2] = get_str(map[i], 2);
-		else if (map[i][0] == 'E' && map[i][1] == 'A' && map[i][2] == ' ')
-			game->img_path[3] = get_str(map[i], 2);
-		else if (map[i][0] == 'F' && map[i][1] == ' ')
-			game->flor = get_str(map[i], 1);
-		else if (map[i][0] == 'c' && map[i][1] == ' ')
-			game->cell = get_str(map[i], 1);
+		if (game->map[i][0] == 'N' && game->map[i][1] == 'O' && game->map[i][2] == ' ')
+			game->img_path[0] = get_str(game->map[i], 2);
+		else if (game->map[i][0] == 'S' && game->map[i][1] == 'O' && game->map[i][2] == ' ')
+			game->img_path[1] = get_str(game->map[i], 2);
+		else if (game->map[i][0] == 'W' && game->map[i][1] == 'E' && game->map[i][2] == ' ')
+			game->img_path[2] = get_str(game->map[i], 2);
+		else if (game->map[i][0] == 'E' && game->map[i][1] == 'A' && game->map[i][2] == ' ')
+			game->img_path[3] = get_str(game->map[i], 2);
+		else if (game->map[i][0] == 'F' && game->map[i][1] == ' ')
+			game->flor = get_str(game->map[i], 1);
+		else if (game->map[i][0] == 'c' && game->map[i][1] == ' ')
+			game->cell = get_str(game->map[i], 1);
 		else
 		{
 			i++;
 			continue;
 		}
-		remove_line(&map, i);
+		remove_line(&game->map, i);
 	}
-	return (map);
 }
 

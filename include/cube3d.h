@@ -6,7 +6,7 @@
 /*   By: lucmansa <lucmansa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 15:43:16 by lucmansa          #+#    #+#             */
-/*   Updated: 2025/08/12 16:16:01 by lucmansa         ###   ########.fr       */
+/*   Updated: 2025/08/12 17:14:54 by lucmansa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,9 @@ int		c3d_set_err(int err);
 void 	c3d_print_err();
 
 char 	**read_map(char *path);
-char 	**get_texture(t_game *game, char **map);
+void	get_texture(t_game *game);
+int		check_map(t_game *game);
+int		launch_parsing(t_game *game, char *arg);
 
 void	*ft_calloc(size_t size);
 void	*ft_realloc(void *ptr, size_t size, int do_zero);

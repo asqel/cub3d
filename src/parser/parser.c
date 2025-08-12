@@ -6,7 +6,7 @@
 /*   By: lucmansa <lucmansa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 16:24:49 by lucmansa          #+#    #+#             */
-/*   Updated: 2025/08/12 16:54:05 by lucmansa         ###   ########.fr       */
+/*   Updated: 2025/08/12 17:14:24 by lucmansa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,11 @@ char **read_map(char *path)
 		return (c3d_set_err(1), NULL);
 	map = read_map_fd(fd);
 	return (map);
+}
+
+int	launch_parsing(t_game *game, char *arg)
+{
+	game->map = read_map(arg);
+	get_texture(game);
+	return(check_map(game));
 }

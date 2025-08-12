@@ -6,7 +6,7 @@
 /*   By: lucmansa <lucmansa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 15:29:31 by lucmansa          #+#    #+#             */
-/*   Updated: 2025/08/12 16:29:28 by lucmansa         ###   ########.fr       */
+/*   Updated: 2025/08/12 17:15:35 by lucmansa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void prnt_map(char **map)
 
 int	main(int argc, char **argv)
 {
-	char **map;
+
 	t_game game;
 
 	(void)argc;
@@ -34,13 +34,7 @@ int	main(int argc, char **argv)
 	game.img_path[3] = 0;
 	game.cell = 0;
 	game.flor = 0;
-	map = read_map(argv[1]);
-	prnt_map(map);
-	map = get_texture(&game, map);
-	printf("-----------\n");
-	printf("NO path : %s\n", game.img_path[0]);
-	printf("SO path : %s\n", game.img_path[1]);
-	printf("-----------\n");
-	prnt_map(map);
-		
+	if (launch_parsing(&game, argv[1]))
+		return (1);
+	return (0);
 }
