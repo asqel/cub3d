@@ -6,7 +6,7 @@
 /*   By: axlleres <axlleres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 15:29:31 by lucmansa          #+#    #+#             */
-/*   Updated: 2025/08/13 13:51:39 by axlleres         ###   ########.fr       */
+/*   Updated: 2025/08/13 20:33:41 by axlleres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,8 @@ void get_ray(t_game *game, t_ray *rays) {
 		}
 		if (!hit)
 			continue;
+		if(side == 0) perpWallDist = (sideDistX - deltaDistX);
+      	else          perpWallDist = (sideDistY - deltaDistY);
 		//Calculate distance of perpendicular ray (Euclidean distance would give fisheye effect!)
 		double wallX; //where exactly the wall was hit
 	 	if(side == 0) wallX = game->player_y + perpWallDist * rayDirY;
@@ -119,6 +121,8 @@ void get_ray(t_game *game, t_ray *rays) {
 			}
 		}
 		rays[i].dist *= cos(angle - game->rot);
+		if (rays[i].texture_percent >= 1)
+			rays[i].texture_percent = 0.9999;
 	}
 }
 
