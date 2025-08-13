@@ -6,7 +6,7 @@
 /*   By: axlleres <axlleres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 15:29:31 by lucmansa          #+#    #+#             */
-/*   Updated: 2025/08/13 12:24:59 by axlleres         ###   ########.fr       */
+/*   Updated: 2025/08/13 13:51:39 by axlleres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,8 +158,10 @@ int test(void *param) {
 	//printf("RAYS\n");
 	for (int i = 0; i < WIN_WIDTH; i++) {
 		if (rays[i].face_hit == -1) {
-			for (int y = 0; y < WIN_HEIGHT; y++)
-				buffer[y * WIN_WIDTH + i] = 0x000000;
+			for (int y = 0; y < WIN_HEIGHT / 2; y++)
+				buffer[y * WIN_WIDTH + i] = 0xFF0000;
+			for (int y = WIN_HEIGHT / 2; y < WIN_HEIGHT; y++)
+				buffer[y * WIN_WIDTH + i] = 0x0000FF;
 			continue;
 		}
 		//printf("Ray %d: x=%.2f, y=%.2f, dist=%.2f, face_hit=%d\n", i, rays[i].x, rays[i].y, rays[i].dist, rays[i].face_hit);
@@ -197,10 +199,10 @@ int test(void *param) {
 		for (; y < y_end; y++) {
 			buffer[y * WIN_WIDTH + i] = texture_column[(int)((y - y_start) * 1.0 / (line_height) * tex_height)];
 		}
-		for (int y = 0; y < y_start && y < WIN_HEIGHT; y++)
-			buffer[y * WIN_WIDTH + i] = 0x000000;
+		for (int y = 0; y < y_start; y++)
+			buffer[y * WIN_WIDTH + i] = 0xff0000;
 		for (int y = y_end; y < WIN_HEIGHT; y++)
-			buffer[y * WIN_WIDTH + i] = 0x000000;
+			buffer[y * WIN_WIDTH + i] = 0x0000ff;
 	}
 	gettimeofday(&stop, NULL);
 	long seconds = stop.tv_sec - start.tv_sec;
@@ -306,8 +308,8 @@ int	main(int argc, char **argv)
 
 	mlx_mouse_hide(mlx.mlx, mlx.win);
 
-	mlx_hook(mlx.win, KeyPress, KeyPressMask, key_pressed, &game);
-	mlx_hook(mlx.win, KeyRelease, KeyReleaseMask, key_released, &game);
-	mlx_loop_hook(mlx.mlx, test, &game);
+	mlx_hook(mlx.win, KeyPress, KeyPressMask, (void *)key_pressed, &game);
+	mlx_hook(mlx.win, KeyRelease, KeyReleaseMask, (void *)key_released, &game);
+	mlx_loop_hook(mlx.mlx, (void *)test, &game);
 	mlx_loop(mlx.mlx);
 }
