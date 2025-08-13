@@ -6,7 +6,7 @@
 /*   By: axlleres <axlleres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 15:43:16 by lucmansa          #+#    #+#             */
-/*   Updated: 2025/08/13 01:28:34 by axlleres         ###   ########.fr       */
+/*   Updated: 2025/08/13 11:56:59 by axlleres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ typedef struct s_game
 	double player_y;
 	double rot;
 	int key_pressed[256]; // w a s d
+	t_img numberes[10];
 } t_game;
 
 typedef struct s_ray

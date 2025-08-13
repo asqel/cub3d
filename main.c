@@ -6,7 +6,7 @@
 /*   By: axlleres <axlleres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 15:29:31 by lucmansa          #+#    #+#             */
-/*   Updated: 2025/08/12 22:42:17 by axlleres         ###   ########.fr       */
+/*   Updated: 2025/08/13 12:24:59 by axlleres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,17 @@ void get_ray(t_game *game, t_ray *rays) {
 	}
 }
 
+void put_img(t_game *game, t_img img, int x, int y, uint32_t *buffer) {
+	(void)game;
+	for (int i = 0; i < img.width; i++) {
+		uint32_t *column = &img.data[i * img.height];
+		for (int k = 0; k < img.height; k++) {
+			if (column[k] >> 24 == 0)
+				buffer[(i + x) + (k + y) * WIN_WIDTH] = column[k];
+		}
+	}
+}
+
 int test(void *param) {
 	struct timeval start, stop;
 	gettimeofday(&start, NULL);
@@ -191,12 +202,26 @@ int test(void *param) {
 		for (int y = y_end; y < WIN_HEIGHT; y++)
 			buffer[y * WIN_WIDTH + i] = 0x000000;
 	}
-	mlx_put_image_to_window(game->mlx.mlx, game->mlx.win, game->mlx.backbuffer, 0, 0);
 	gettimeofday(&stop, NULL);
 	long seconds = stop.tv_sec - start.tv_sec;
 	long micros = stop.tv_usec - start.tv_usec;
 	long elapsed = seconds * 1000 + micros / 1000;
-	printf("Frame time: %ld ms as fps %f\n", elapsed, 1000.0 / elapsed);
+	int fps = 1000 / elapsed;
+	if (fps == 0) {
+		int px = WIN_WIDTH - game->numberes[0].width;
+		int py = 0;
+		put_img(game, game->numberes[0], px, py, buffer);
+	}
+	else {
+		int px = WIN_WIDTH - game->numberes[fps % 10].width;
+		int py = 0;
+		while (fps > 0) {
+			put_img(game, game->numberes[fps % 10], px, py, buffer);
+			fps /= 10;
+			px -= game->numberes[fps % 10].width;
+		}
+	}
+	mlx_put_image_to_window(game->mlx.mlx, game->mlx.win, game->mlx.backbuffer, 0, 0);
 	return (0);
 }
 
@@ -273,6 +298,12 @@ int	main(int argc, char **argv)
 	c3d_load_texture(mlx.mlx, "assets/dragon.xpm", &game.textures[DIR_EAST]);
 	c3d_load_texture(mlx.mlx, "assets/grass.xpm", &game.textures[DIR_SOUTH]);
 	c3d_load_texture(mlx.mlx, "assets/dragon.xpm", &game.textures[DIR_WEST]);
+	char path[] = "assets/0.xpm";
+	for (int i = 0; i < 10; i++) {
+		path[7] = '0' + i;
+		c3d_load_texture(mlx.mlx, path, &game.numberes[i]);
+	}
+
 	mlx_mouse_hide(mlx.mlx, mlx.win);
 
 	mlx_hook(mlx.win, KeyPress, KeyPressMask, key_pressed, &game);

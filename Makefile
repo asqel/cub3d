@@ -32,4 +32,6 @@ fclean: clean
 
 re: fclean all
 
+#for f in assets/*.png ; do convert $f ${f/%png/xpm} ; done
+
 .PHONY: re fclean clean all
