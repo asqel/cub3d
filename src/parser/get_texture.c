@@ -6,7 +6,7 @@
 /*   By: lucmansa <lucmansa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 15:55:21 by lucmansa          #+#    #+#             */
-/*   Updated: 2025/08/12 17:16:59 by lucmansa         ###   ########.fr       */
+/*   Updated: 2025/08/12 17:50:01 by lucmansa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,6 @@ int	ft_tablen(char **tab)
 	return (i);
 }
 
-void	remove_line(char ***map, int i)
-{
-	while((*map)[i + 1])
-	{
-		(*map)[i] = (*map)[i + 1];
-		i++;
-	}
-	(*map)[i] = NULL;
-}
 
 char	*get_str(char *seg, int i)
 {
@@ -78,14 +69,9 @@ void	get_texture(t_game *game)
 			game->img_path[3] = get_str(game->map[i], 2);
 		else if (game->map[i][0] == 'F' && game->map[i][1] == ' ')
 			game->flor = get_str(game->map[i], 1);
-		else if (game->map[i][0] == 'c' && game->map[i][1] == ' ')
+		else if (game->map[i][0] == 'C' && game->map[i][1] == ' ')
 			game->cell = get_str(game->map[i], 1);
-		else
-		{
-			i++;
-			continue;
-		}
-		remove_line(&game->map, i);
+		i++;
 	}
 }
 

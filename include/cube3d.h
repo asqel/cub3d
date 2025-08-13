@@ -6,7 +6,7 @@
 /*   By: lucmansa <lucmansa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 15:43:16 by lucmansa          #+#    #+#             */
-/*   Updated: 2025/08/12 17:14:54 by lucmansa         ###   ########.fr       */
+/*   Updated: 2025/08/12 17:51:48 by lucmansa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ void 	c3d_print_err();
 
 char 	**read_map(char *path);
 void	get_texture(t_game *game);
+void	clean_map(t_game *game);
 int		check_map(t_game *game);
 int		launch_parsing(t_game *game, char *arg);
 

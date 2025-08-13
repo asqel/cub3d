@@ -6,7 +6,7 @@
 /*   By: lucmansa <lucmansa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 15:29:31 by lucmansa          #+#    #+#             */
-/*   Updated: 2025/08/12 17:15:35 by lucmansa         ###   ########.fr       */
+/*   Updated: 2025/08/12 18:05:53 by lucmansa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,6 @@ int	main(int argc, char **argv)
 	game.flor = 0;
 	if (launch_parsing(&game, argv[1]))
 		return (1);
+	prnt_map(game.map);
 	return (0);
 }
