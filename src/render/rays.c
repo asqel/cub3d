@@ -12,42 +12,29 @@ static void init_rays(t_game *game, t_ray *rays, int x, int y) {
 		rays[i].diry = sin(rays[i].angle);
 		rays[i].map_x = x;
 		rays[i].map_y = y;
-		rays[i].d_dist_x = 1e30;
-		rays[i].d_dist_y = 1e30;
-		if (rays[i].dirx)
-			rays[i].d_dist_x = fabs(1 / rays[i].dirx);
-		if (rays[i].diry)
-			rays[i].d_dist_y = fabs(1 / rays[i].diry);
+		rays[i].d_dist_x = fabs(1 / rays[i].dirx);
+		rays[i].d_dist_y = fabs(1 / rays[i].diry);
 		rays[i].has_hit = 0;
-		rays[i].step_x = 1;
-		rays[i].step_y = 1;
-		if (rays[i].dirx < 0)
-			rays[i].step_x = -1;
-		if (rays[i].diry < 0)
-			rays[i].step_y = -1;
+		rays[i].step_x = ((rays[i].dirx >= 0) << 1 ) - 1;
+		rays[i].step_y = ((rays[i].diry >= 0) << 1 ) - 1;
+		if(rays[i].dirx < 0)
+		  rays[i].side_dist_x = (game->player_x - rays[i].map_x) * rays[i].d_dist_x;
+		else
+		  rays[i].side_dist_x = (rays[i].map_x + 1.0 - game->player_x) * rays[i].d_dist_x;
+		if(rays[i].diry < 0)
+		  rays[i].side_dist_y = (game->player_y - rays[i].map_y) * rays[i].d_dist_y;
+		else
+		  rays[i].side_dist_y = (rays[i].map_y + 1.0 - game->player_y) * rays[i].d_dist_y;
 	}
 }
 
 void get_ray(t_game *game, t_ray *rays, int x, int y) {
+	int i;
+
 	init_rays(game, rays, x, y);
-	for (int i = 0; i < WIN_WIDTH; i++) {
-		if(rays[i].dirx < 0)
-		{
-		  rays[i].side_dist_x = (game->player_x - rays[i].map_x) * rays[i].d_dist_x;
-		}
-		else
-		{
-		  rays[i].side_dist_x = (rays[i].map_x + 1.0 - game->player_x) * rays[i].d_dist_x;
-		}
-		if(rays[i].diry < 0)
-		{
-		  rays[i].side_dist_y = (game->player_y - rays[i].map_y) * rays[i].d_dist_y;
-		}
-		else
-		{
-		  rays[i].side_dist_y = (rays[i].map_y + 1.0 - game->player_y) * rays[i].d_dist_y;
-		}
-		//perform DDA
+	i = WIN_WIDTH;
+	while (i-- >= 0)
+	{
 		while (!rays[i].has_hit)
 		{
 			if (rays[i].map_x < 0 && rays[i].dirx < 0)

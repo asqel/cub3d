@@ -6,7 +6,7 @@
 /*   By: axlleres <axlleres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 15:29:31 by lucmansa          #+#    #+#             */
-/*   Updated: 2025/08/14 13:33:27 by axlleres         ###   ########.fr       */
+/*   Updated: 2025/08/14 20:13:45 by axlleres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 #include <stdio.h>
 #include <sys/time.h>
 
-
+void get_ray(t_game *game, t_ray *rays, int x, int y);
 
 void put_img(t_game *game, t_img img, int x, int y, uint32_t *buffer) {
 	(void)game;
