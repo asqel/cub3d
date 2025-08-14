@@ -6,7 +6,7 @@
 /*   By: axlleres <axlleres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 15:43:16 by lucmansa          #+#    #+#             */
-/*   Updated: 2025/08/13 11:56:59 by axlleres         ###   ########.fr       */
+/*   Updated: 2025/08/14 13:44:03 by axlleres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,15 +54,27 @@ typedef struct s_game
 
 typedef struct s_ray
 {
-	double x;
-	double y;
-	double old_x;
-	double old_y;
-	double rot;
-	int face_hit;
-	double dist;
-	double texture_percent;
+	double	x;
+	double	y;
+	int		map_x;
+	int		map_y;
+	double	angle;
+	int		face_hit;
+	double	dist;
+	double	texture_percent;
+	double	dirx;
+	double	diry;
+	double	hit_horizontal;
+	double	d_dist_x;
+	double	d_dist_y;
+	double	side_dist_x;
+	double	side_dist_y;
+	double	has_hit;
+	double	step_x;
+	double	step_y;
 } t_ray;
+
+#define FOV 50.0
 
 # define DIR_NORTH 0
 # define DIR_EAST 1

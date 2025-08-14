@@ -6,7 +6,7 @@
 /*   By: axlleres <axlleres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 15:29:31 by lucmansa          #+#    #+#             */
-/*   Updated: 2025/08/13 20:33:41 by axlleres         ###   ########.fr       */
+/*   Updated: 2025/08/14 13:33:27 by axlleres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,111 +20,7 @@
 #include <stdio.h>
 #include <sys/time.h>
 
-#define FOV 50.0
 
-void get_ray(t_game *game, t_ray *rays) {
-	for (int i = 0; i < WIN_WIDTH; i++) {
-		rays[i].face_hit = -1;
-		double angle = game->rot - ((FOV * i / WIN_WIDTH) - FOV / 2.0f) * M_PI / 180.0;
-		double rayDirX = cos(angle);
-		double rayDirY = sin(angle);
-		//which box of the map we're in
-		int mapX = (int)game->player_x;
-		int mapY = (int)game->player_y;
-		//length of ray from current position to next x or y-side
-		double sideDistX;
-		double sideDistY;
-		//length of ray from one x or y-side to next x or y-side
-		double deltaDistX = (rayDirX == 0) ? 1e30 : fabs(1 / rayDirX);
-		double deltaDistY = (rayDirY == 0) ? 1e30 : fabs(1 / rayDirY);
-		double perpWallDist;
-		//what direction to step in x or y-direction (either +1 or -1)
-		int stepX;
-		int stepY;
-		int hit = 0; //was there a wall hit?
-		int side; //was a NS or a EW wall hit?
-		//calculate step and initial sideDist
-		if(rayDirX < 0)
-		{
-		  stepX = -1;
-		  sideDistX = (game->player_x - mapX) * deltaDistX;
-		}
-		else
-		{
-		  stepX = 1;
-		  sideDistX = (mapX + 1.0 - game->player_x) * deltaDistX;
-		}
-		if(rayDirY < 0)
-		{
-		  stepY = -1;
-		  sideDistY = (game->player_y - mapY) * deltaDistY;
-		}
-		else
-		{
-		  stepY = 1;
-		  sideDistY = (mapY + 1.0 - game->player_y) * deltaDistY;
-		}
-		//perform DDA
-		while (hit == 0)
-		{
-			if (mapX < 0 && rayDirX < 0)
-				break;
-			if (mapY < 0 && rayDirY < 0)
-				break;
-			if (mapX >= game->map_width && rayDirX > 0)
-				break;
-			if (mapY >= game->map_height && rayDirY > 0)
-				break;
-			if(sideDistX < sideDistY)
-			{
-				sideDistX += deltaDistX;
-				mapX += stepX;
-				side = 0;
-			}
-			else
-			{
-				sideDistY += deltaDistY;
-				mapY += stepY;
-				side = 1;
-			}
-			if (mapY < 0 || mapX < 0 || mapY >= game->map_height || mapX >= game->map_width)
-				continue;
-			//Check if ray has hit a wall
-			if(game->map[mapY][mapX] == '1') hit = 1;
-		}
-		if (!hit)
-			continue;
-		if(side == 0) perpWallDist = (sideDistX - deltaDistX);
-      	else          perpWallDist = (sideDistY - deltaDistY);
-		//Calculate distance of perpendicular ray (Euclidean distance would give fisheye effect!)
-		double wallX; //where exactly the wall was hit
-	 	if(side == 0) wallX = game->player_y + perpWallDist * rayDirY;
-	 	else          wallX = game->player_x + perpWallDist * rayDirX;
-	 	wallX -= floor((wallX));
-		rays[i].texture_percent = wallX;
-		if(side == 0){
-			perpWallDist = (sideDistX - deltaDistX);
-			rays[i].dist = perpWallDist;
-			rays[i].face_hit = DIR_WEST;
-			if (rayDirX > 0) {
-				rays[i].texture_percent = 1 - rays[i].texture_percent;
-				rays[i].face_hit = DIR_EAST;
-			}
-		}
-		else {
-			perpWallDist = (sideDistY - deltaDistY);
-			rays[i].dist = perpWallDist;
-			rays[i].face_hit = DIR_NORTH;
-			if (rayDirY < 0) {
-				rays[i].texture_percent = 1 - rays[i].texture_percent;
-				rays[i].face_hit = DIR_SOUTH;
-			}
-		}
-		rays[i].dist *= cos(angle - game->rot);
-		if (rays[i].texture_percent >= 1)
-			rays[i].texture_percent = 0.9999;
-	}
-}
 
 void put_img(t_game *game, t_img img, int x, int y, uint32_t *buffer) {
 	(void)game;
@@ -156,7 +52,7 @@ int test(void *param) {
 		game->player_y -= sin(game->rot) * 0.04 * (game->key_pressed[10] ? 2 : 1);
 	}
 
-	get_ray(game, rays);
+	get_ray(game, rays, (int)game->player_x, (int)game->player_y);
 	int tmp;
 	uint32_t *buffer = (uint32_t *)mlx_get_data_addr(game->mlx.backbuffer, &tmp, &tmp, &tmp);
 	//printf("RAYS\n");
