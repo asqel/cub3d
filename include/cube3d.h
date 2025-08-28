@@ -6,7 +6,7 @@
 /*   By: axlleres <axlleres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 15:43:16 by lucmansa          #+#    #+#             */
-/*   Updated: 2025/08/14 20:13:15 by axlleres         ###   ########.fr       */
+/*   Updated: 2025/08/21 20:02:51 by axlleres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,19 +46,20 @@ typedef struct s_game
 	int map_height;
 	int map_width;
 	t_img textures[4];
-	double player_x;
-	double player_y;
+	double p_x;
+	double p_y;
 	double rot;
 	int key_pressed[256]; // w a s d
 	t_img numberes[10];
+	uint32_t *buffer;
 } t_game;
 
 typedef struct s_ray
 {
 	double	x;
 	double	y;
-	int		map_x;
-	int		map_y;
+	int		m_x;
+	int		m_y;
 	double	angle;
 	int		face_hit;
 	double	dist;
@@ -68,14 +69,16 @@ typedef struct s_ray
 	double	hit_horizontal;
 	double	d_dist_x;
 	double	d_dist_y;
-	double	side_dist_x;
-	double	side_dist_y;
+	double	sd_x;
+	double	sd_y;
 	double	has_hit;
 	double	step_x;
 	double	step_y;
 } t_ray;
 
 #define FOV 50.0
+#define H_FOV (FOV / 2.0)
+#define TO_RAD (M_PI / 180.0)
 
 # define DIR_NORTH 0
 # define DIR_EAST 1
@@ -108,5 +111,8 @@ char **ft_split_lines(char *text, int *len);
 
 void ft_memcpy(char *dest, const char *src, int len);
 int c3d_load_texture(void *mlx, char *path, t_img *img);
+
+void	get_ray(t_game *game, t_ray *rays, int x, int y);
+void	c3d_render(t_game *game);
 
 #endif

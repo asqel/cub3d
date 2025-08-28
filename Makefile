@@ -9,7 +9,7 @@ NAME = cub3D
 CC = cc
 LD = cc
 
-CFLAGS = -Wall -Wextra -Werror -Iinclude -Iminilibx-linux -g
+CFLAGS = -Wall -Wextra -Werror -Iinclude -Iminilibx-linux -g -Wno-unused-result
 LDFLAGS = -lm -lX11 -lXext
 
 all: $(NAME)
@@ -25,7 +25,7 @@ $(MLX_PATH)/$(MLX_NAME):
 
 clean:
 	rm -rf $(OBJ)
-	make -C $(MLX_PATH) clean
+	#make -C $(MLX_PATH) clean
 
 fclean: clean
 	rm -rf $(NAME)
