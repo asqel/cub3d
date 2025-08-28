@@ -6,7 +6,7 @@
 /*   By: axlleres <axlleres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 15:43:16 by lucmansa          #+#    #+#             */
-/*   Updated: 2025/08/21 20:02:51 by axlleres         ###   ########.fr       */
+/*   Updated: 2025/08/28 22:59:18 by axlleres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,8 @@ char **ft_split_lines(char *text, int *len);
 
 void ft_memcpy(char *dest, const char *src, int len);
 int c3d_load_texture(void *mlx, char *path, t_img *img);
+void get_ray(t_game *game, t_ray *rays, int x, int y);
+void c3d_render(t_game *ctx);
 
 void	get_ray(t_game *game, t_ray *rays, int x, int y);
 void	c3d_render(t_game *game);
