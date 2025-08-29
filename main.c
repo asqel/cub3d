@@ -1,13 +1,13 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
+/*																			*/
+/*														:::	  ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: axlleres <axlleres@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/09 15:29:31 by lucmansa          #+#    #+#             */
-/*   Updated: 2025/08/29 01:30:24 by axlleres         ###   ########.fr       */
-/*                                                                            */
+/*													+:+ +:+		 +:+	 */
+/*   By: axlleres <axlleres@student.42.fr>		  +#+  +:+	   +#+		*/
+/*												+#+#+#+#+#+   +#+		   */
+/*   Created: 2025/07/09 15:29:31 by lucmansa		  #+#	#+#			 */
+/*   Updated: 2025/08/29 19:24:34 by axlleres         ###   ########.fr       */
+/*																			*/
 /* ************************************************************************** */
 
 #include "cube3d.h"
@@ -33,6 +33,8 @@ void put_img(t_game *game, t_img img, int x, int y, uint32_t *buffer) {
 }
 
 int test(void *param) {
+	struct timeval start, stop;
+	gettimeofday(&start, NULL);
 	t_game *game = (t_game *)param;
 
 	if (game->key_pressed[1])
@@ -47,8 +49,30 @@ int test(void *param) {
 		game->p_x -= cos(game->rot) * 0.04 * (game->key_pressed[10] ? 2 : 1);
 		game->p_y -= sin(game->rot) * 0.04 * (game->key_pressed[10] ? 2 : 1);
 	}
-
 	c3d_render(game);
+	gettimeofday(&stop, NULL);
+	long seconds = stop.tv_sec - start.tv_sec;
+	long micros = stop.tv_usec - start.tv_usec;
+	long elapsed = seconds * 1000 + micros / 1000;
+	int fps;
+	if (elapsed)
+		fps = 1000 / elapsed;
+	else
+		fps = 0x7FFFFFFF;
+	if (fps == 0) {
+		int px = WIN_WIDTH - game->numberes[0].width;
+		int py = 0;
+		put_img(game, game->numberes[0], px, py, game->buffer);
+	}
+	else {
+		int px = WIN_WIDTH - game->numberes[fps % 10].width;
+		int py = 0;
+		while (fps > 0) {
+			put_img(game, game->numberes[fps % 10], px, py, game->buffer);
+			fps /= 10;
+			px -= game->numberes[fps % 10].width;
+		}
+	}
 	mlx_put_image_to_window(game->mlx.mlx, game->mlx.win, game->mlx.backbuffer, 0, 0);
 	return (0);
 }
@@ -101,13 +125,13 @@ int	main(int argc, char **argv)
 	mlx.backbuffer = mlx_new_image(mlx.mlx, WIN_WIDTH, WIN_HEIGHT);
 	game = (t_game){0};
 	game.mlx = mlx;
-	game.p_x = 2;
-	game.p_y = 2;
+	game.p_x = 1.5;
+	game.p_y = 1.5;
 	game.rot = 0;
 	game.map = (char *[]){
 		"111111111111111111111111",
 		"100000000001000000000001",
-		"100000000000000000000001",
+		"111111111111111111111111",
 		"100000000000000000000001",
 		"100000000000000000000001",
 		"100000000000000000000001",
