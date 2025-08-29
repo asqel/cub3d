@@ -6,7 +6,7 @@
 /*   By: axlleres <axlleres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 15:29:31 by lucmansa          #+#    #+#             */
-/*   Updated: 2025/08/28 21:45:06 by axlleres         ###   ########.fr       */
+/*   Updated: 2025/08/29 01:30:24 by axlleres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,6 @@ void put_img(t_game *game, t_img img, int x, int y, uint32_t *buffer) {
 }
 
 int test(void *param) {
-	struct timeval start, stop;
-	gettimeofday(&start, NULL);
 	t_game *game = (t_game *)param;
 
 	if (game->key_pressed[1])
@@ -42,85 +40,15 @@ int test(void *param) {
 	else if (game->key_pressed[3])
 		game->rot -= M_PI / 180 * 1;
 	if (game->key_pressed[0]) {
-		game->player_x += cos(game->rot) * 0.04 * (game->key_pressed[10] ? 2 : 1);
-		game->player_y += sin(game->rot) * 0.04 * (game->key_pressed[10] ? 2 : 1);
+		game->p_x += cos(game->rot) * 0.04 * (game->key_pressed[10] ? 2 : 1);
+		game->p_y += sin(game->rot) * 0.04 * (game->key_pressed[10] ? 2 : 1);
 	}
 	if (game->key_pressed[2]) {
-		game->player_x -= cos(game->rot) * 0.04 * (game->key_pressed[10] ? 2 : 1);
-		game->player_y -= sin(game->rot) * 0.04 * (game->key_pressed[10] ? 2 : 1);
+		game->p_x -= cos(game->rot) * 0.04 * (game->key_pressed[10] ? 2 : 1);
+		game->p_y -= sin(game->rot) * 0.04 * (game->key_pressed[10] ? 2 : 1);
 	}
 
-	 int tmp;
-	uint32_t *buffer = (uint32_t *)mlx_get_data_addr(game->mlx.backbuffer, &tmp, &tmp, &tmp);
-	// //printf("RAYS\n");
-	// for (int i = 0; i < WIN_WIDTH; i++) {
-	// 	if (rays[i].face_hit == -1) {
-	// 		for (int y = 0; y < WIN_HEIGHT / 2; y++)
-	// 			buffer[y * WIN_WIDTH + i] = 0xFF0000;
-	// 		for (int y = WIN_HEIGHT / 2; y < WIN_HEIGHT; y++)
-	// 			buffer[y * WIN_WIDTH + i] = 0x0000FF;
-	// 		continue;
-	// 	}
-	// 	//printf("Ray %d: x=%.2f, y=%.2f, dist=%.2f, face_hit=%d\n", i, rays[i].x, rays[i].y, rays[i].dist, rays[i].face_hit);
-	// 	//rays[i].dist = rays[i].dist * cos((i - WIN_WIDTH / 2) * FOV / WIN_WIDTH * M_PI / 180);
-	// 	int line_height = ((int)(WIN_HEIGHT / (rays[i].dist)));
-	// 	int y_start = (WIN_HEIGHT - line_height) / 2;
-	// 	int y_end = y_start + line_height;
-	// 	uint32_t *texture_column;
-	// 	int tex_height;
-	// 	if (rays[i].face_hit == DIR_NORTH) {
-	// 		texture_column = &game->textures[0].data[((int)(game->textures[0].width * rays[i].texture_percent) * game->textures[0].height)];
-	// 		tex_height = game->textures[0].height;
-	// 	}
-	// 	else if (rays[i].face_hit == DIR_EAST) {
-	// 		texture_column = &game->textures[1].data[((int)(game->textures[1].width * rays[i].texture_percent) * game->textures[1].height)];
-	// 		tex_height = game->textures[1].height;
-	// 	}
-	// 	else if (rays[i].face_hit == DIR_SOUTH) {
-	// 		texture_column = &game->textures[2].data[((int)(game->textures[2].width * rays[i].texture_percent) * game->textures[2].height)];
-	// 		tex_height = game->textures[2].height;
-	// 	}
-	// 	else {
-	// 		texture_column = &game->textures[3].data[((int)(game->textures[3].width * rays[i].texture_percent) * game->textures[3].height)];
-	// 		tex_height = game->textures[3].height;
-	// 	}
-	// 	int y = y_start;
-	// 	if (y < 0)
-	// 		y = 0;
-	// 	if (y >= WIN_HEIGHT)
-	// 		y = WIN_HEIGHT;
-	// 	if (y_end > WIN_HEIGHT)
-	// 		y_end = WIN_HEIGHT;
-	// 	if (y_end < 0)
-	// 		y_end = 0;
-	// 	for (; y < y_end; y++) {
-	// 		buffer[y * WIN_WIDTH + i] = texture_column[(int)((y - y_start) * 1.0 / (line_height) * tex_height)];
-	// 	}
-	// 	for (int y = 0; y < y_start; y++)
-	// 		buffer[y * WIN_WIDTH + i] = 0xff0000;
-	// 	for (int y = y_end; y < WIN_HEIGHT; y++)
-	// 		buffer[y * WIN_WIDTH + i] = 0x0000ff;
-	// }
 	c3d_render(game);
-	gettimeofday(&stop, NULL);
-	long seconds = stop.tv_sec - start.tv_sec;
-	long micros = stop.tv_usec - start.tv_usec;
-	long elapsed = seconds * 1000 + micros / 1000;
-	int fps = 1000 / elapsed;
-	if (fps == 0) {
-		int px = WIN_WIDTH - game->numberes[0].width;
-		int py = 0;
-		put_img(game, game->numberes[0], px, py, buffer);
-	}
-	else {
-		int px = WIN_WIDTH - game->numberes[fps % 10].width;
-		int py = 0;
-		while (fps > 0) {
-			put_img(game, game->numberes[fps % 10], px, py, buffer);
-			fps /= 10;
-			px -= game->numberes[fps % 10].width;
-		}
-	}
 	mlx_put_image_to_window(game->mlx.mlx, game->mlx.win, game->mlx.backbuffer, 0, 0);
 	return (0);
 }
@@ -138,7 +66,7 @@ int key_pressed(int keycode, t_game *game)
 	else if (keycode == XK_Shift_L || keycode == XK_Shift_R)
 		game->key_pressed[10] = 1;
 	else if (keycode == XK_space)
-		printf("player (%f %f) rot %f\n", game->player_x, game->player_y, game->rot);
+		printf("player (%f %f) rot %f\n", game->p_x, game->p_y, game->rot);
 	else if (keycode == XK_r)
 		game->rot = 0;
 	return 0;
@@ -166,13 +94,15 @@ int	main(int argc, char **argv)
 
 	(void)argc;
 	(void)argv;
+	game = (t_game){0};
+	c3d_init(&game, argc, argv);
 	mlx.mlx = mlx_init();
 	mlx.win = mlx_new_window(mlx.mlx, WIN_WIDTH, WIN_HEIGHT, "Cube3D");
 	mlx.backbuffer = mlx_new_image(mlx.mlx, WIN_WIDTH, WIN_HEIGHT);
 	game = (t_game){0};
 	game.mlx = mlx;
-	game.player_x = 2;
-	game.player_y = 2;
+	game.p_x = 2;
+	game.p_y = 2;
 	game.rot = 0;
 	game.map = (char *[]){
 		"111111111111111111111111",
@@ -204,6 +134,8 @@ int	main(int argc, char **argv)
 		c3d_load_texture(mlx.mlx, path, &game.numberes[i]);
 	}
 	game.buffer = (uint32_t *)mlx_get_data_addr(game.mlx.backbuffer, &argc, &argc, &argc);
+	game.ceil_col = 0x0000FF;
+	game.floor_col = 0x00ff00;
 
 	mlx_mouse_hide(mlx.mlx, mlx.win);
 

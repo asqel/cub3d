@@ -6,7 +6,7 @@
 /*   By: axlleres <axlleres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 15:43:16 by lucmansa          #+#    #+#             */
-/*   Updated: 2025/08/28 22:59:18 by axlleres         ###   ########.fr       */
+/*   Updated: 2025/08/29 01:29:40 by axlleres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ typedef struct s_game
 	int key_pressed[256]; // w a s d
 	t_img numberes[10];
 	uint32_t *buffer;
+	uint32_t ceil_col;
+	uint32_t floor_col;
 } t_game;
 
 typedef struct s_ray
@@ -116,5 +118,6 @@ void c3d_render(t_game *ctx);
 
 void	get_ray(t_game *game, t_ray *rays, int x, int y);
 void	c3d_render(t_game *game);
+void	c3d_init(t_game *ctx, int argc, char **argv);
 
 #endif
