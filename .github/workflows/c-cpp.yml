@@ -25,7 +25,7 @@ jobs:
             libxrandr-dev \
             libxinerama-dev \
             libxcursor-dev \
-            libxi-ded \
+            libxi-dev \
             libbsd-dev
 
       - name: Norm check
