@@ -12,7 +12,6 @@
 
 #include "cube3d.h"
 #include <mlx.h>
-#define _USE_MATH_DEFINES
 #include <math.h>
 #include <X11/keysym.h>
 #include <X11/X.h>
@@ -20,151 +19,103 @@
 #include <stdio.h>
 #include <sys/time.h>
 
+void	display_fps(t_game *game, int64_t fps)
+{
+	int	px;
 
-void put_img(t_game *game, t_img img, int x, int y, uint32_t *buffer) {
-	(void)game;
-	for (int i = 0; i < img.width; i++) {
-		uint32_t *column = &img.data[i * img.height];
-		for (int k = 0; k < img.height; k++) {
-			if (column[k] >> 24 == 0)
-				buffer[(i + x) + (k + y) * WIN_WIDTH] = column[k];
+	if (fps < 0)
+		fps = -fps;
+	if (fps == 0)
+		c3d_put_img(game, game->textures[TX_NUM_0],
+			WIN_WIDTH - game->textures[TX_NUM_0].width, 0);
+	else
+	{
+		px = WIN_WIDTH - game->textures[TX_NUM_0 + (fps % 10)].width;
+		while (fps > 0)
+		{
+			c3d_put_img(game, game->textures[TX_NUM_0 + (fps % 10)], px, 0);
+			fps /= 10;
+			px -= game->textures[TX_NUM_0 + (fps % 10)].width;
 		}
 	}
 }
 
-int test(void *param) {
-	struct timeval start, stop;
-	gettimeofday(&start, NULL);
-	t_game *game = (t_game *)param;
+int	test(void *param)
+{
+	struct timeval	start;
+	struct timeval	stop;
+	int64_t			elapsed;
+	t_game			*ctx;
 
-	if (game->key_pressed[1])
-		game->rot += M_PI / 180 * 1;
-	else if (game->key_pressed[3])
-		game->rot -= M_PI / 180 * 1;
-	if (game->key_pressed[0]) {
-		game->p_x += cos(game->rot) * 0.04 * (game->key_pressed[10] ? 2 : 1);
-		game->p_y += sin(game->rot) * 0.04 * (game->key_pressed[10] ? 2 : 1);
-	}
-	if (game->key_pressed[2]) {
-		game->p_x -= cos(game->rot) * 0.04 * (game->key_pressed[10] ? 2 : 1);
-		game->p_y -= sin(game->rot) * 0.04 * (game->key_pressed[10] ? 2 : 1);
-	}
-	c3d_render(game);
+	ctx = param;
+	gettimeofday(&start, NULL);
+	c3d_tick(param);
+	c3d_render(param);
 	gettimeofday(&stop, NULL);
-	long seconds = stop.tv_sec - start.tv_sec;
-	long micros = stop.tv_usec - start.tv_usec;
-	long elapsed = seconds * 1000 + micros / 1000;
-	int fps;
+	elapsed = (stop.tv_sec - start.tv_sec) * 1000000
+		+ stop.tv_usec - start.tv_usec;
 	if (elapsed)
-		fps = 1000 / elapsed;
+		display_fps(param, 1000 * 1000 / elapsed);
 	else
-		fps = 0x7FFFFFFF;
-	if (fps == 0) {
-		int px = WIN_WIDTH - game->numberes[0].width;
-		int py = 0;
-		put_img(game, game->numberes[0], px, py, game->buffer);
-	}
-	else {
-		int px = WIN_WIDTH - game->numberes[fps % 10].width;
-		int py = 0;
-		while (fps > 0) {
-			put_img(game, game->numberes[fps % 10], px, py, game->buffer);
-			fps /= 10;
-			px -= game->numberes[fps % 10].width;
-		}
-	}
-	mlx_put_image_to_window(game->mlx.mlx, game->mlx.win, game->mlx.backbuffer, 0, 0);
+		display_fps(param, 0x7FFFFFFFFFFFFFFFLL);
+	mlx_put_image_to_window(ctx->mlx.mlx,
+		ctx->mlx.win, ctx->mlx.backbuffer, 0, 0);
 	return (0);
 }
 
-int key_pressed(int keycode, t_game *game)
+int	key_pressed(int keycode, t_game *game)
 {
 	if (keycode == XK_w)
-		game->key_pressed[0] = 1; // w
+		game->key_pressed[KEY_UP] = 1;
 	else if (keycode == XK_a)
-		game->key_pressed[1] = 1; // a
+		game->key_pressed[KEY_LEFT] = 1;
 	else if (keycode == XK_s)
-		game->key_pressed[2] = 1; // s
+		game->key_pressed[KEY_DOWN] = 1;
 	else if (keycode == XK_d)
-		game->key_pressed[3] = 1; // d
+		game->key_pressed[KEY_RIGHT] = 1;
 	else if (keycode == XK_Shift_L || keycode == XK_Shift_R)
-		game->key_pressed[10] = 1;
-	else if (keycode == XK_space)
-		printf("player (%f %f) rot %f\n", game->p_x, game->p_y, game->rot);
-	else if (keycode == XK_r)
-		game->rot = 0;
-	return 0;
+		game->key_pressed[KEY_SPRINT] = 1;
+	else if (keycode == XK_Left)
+		game->key_pressed[KEY_LOOK_LEFT] = 1;
+	else if (keycode == XK_Right)
+		game->key_pressed[KEY_LOOK_RIGHT] = 1;
+	else if (keycode == XK_Escape)
+		c3d_exit(game, 0);
+	return (0);
 }
 
-int key_released(int keycode, t_game *game)
+int	key_released(int keycode, t_game *game)
 {
 	if (keycode == XK_w)
-		game->key_pressed[0] = 0; // w
+		game->key_pressed[KEY_UP] = 0;
 	else if (keycode == XK_a)
-		game->key_pressed[1] = 0; // a
+		game->key_pressed[KEY_LEFT] = 0;
 	else if (keycode == XK_s)
-		game->key_pressed[2] = 0; // s
+		game->key_pressed[KEY_DOWN] = 0;
 	else if (keycode == XK_d)
-		game->key_pressed[3] = 0; // d
+		game->key_pressed[KEY_RIGHT] = 0;
 	else if (keycode == XK_Shift_L || keycode == XK_Shift_R)
-		game->key_pressed[10] = 0;
-	return 0;
+		game->key_pressed[KEY_SPRINT] = 0;
+	else if (keycode == XK_Left)
+		game->key_pressed[KEY_LOOK_LEFT] = 0;
+	else if (keycode == XK_Right)
+		game->key_pressed[KEY_LOOK_RIGHT] = 0;
+	return (0);
 }
 
 int	main(int argc, char **argv)
 {
-	t_mlx mlx;
-	t_game game;
+	static t_game	ctx;
 
-	(void)argc;
-	(void)argv;
-	game = (t_game){0};
-	c3d_init(&game, argc, argv);
-	mlx.mlx = mlx_init();
-	mlx.win = mlx_new_window(mlx.mlx, WIN_WIDTH, WIN_HEIGHT, "Cube3D");
-	mlx.backbuffer = mlx_new_image(mlx.mlx, WIN_WIDTH, WIN_HEIGHT);
-	game = (t_game){0};
-	game.mlx = mlx;
-	game.p_x = 1.5;
-	game.p_y = 1.5;
-	game.rot = 0;
-	game.map = (char *[]){
-		"111111111111111111111111",
-		"100000000001000000000001",
-		"111111111111111111111111",
-		"100000000000000000000001",
-		"100000000000000000000001",
-		"100000000000000000000001",
-		"100000000000000000000001",
-		"100000000000000000000001",
-		"100000000000000000000001",
-		"100000000000000000000001",
-		"100000000000000000000001",
-		"100000000000000000000001",
-		"100000000000000000000001",
-		"100000000000000000000001",
-		"100000000000000000000001",
-		"111111111111111111111111"
-	};
-	game.map_height = 16;
-	game.map_width  = 24;
-	c3d_load_texture(mlx.mlx, "assets/grass.xpm", &game.textures[DIR_NORTH]);
-	c3d_load_texture(mlx.mlx, "assets/dragon.xpm", &game.textures[DIR_EAST]);
-	c3d_load_texture(mlx.mlx, "assets/grass.xpm", &game.textures[DIR_SOUTH]);
-	c3d_load_texture(mlx.mlx, "assets/dragon.xpm", &game.textures[DIR_WEST]);
-	char path[] = "assets/0.xpm";
-	for (int i = 0; i < 10; i++) {
-		path[7] = '0' + i;
-		c3d_load_texture(mlx.mlx, path, &game.numberes[i]);
-	}
-	game.buffer = (uint32_t *)mlx_get_data_addr(game.mlx.backbuffer, &argc, &argc, &argc);
-	game.ceil_col = 0x0000FF;
-	game.floor_col = 0x00ff00;
-
-	mlx_mouse_hide(mlx.mlx, mlx.win);
-
-	mlx_hook(mlx.win, KeyPress, KeyPressMask, (void *)key_pressed, &game);
-	mlx_hook(mlx.win, KeyRelease, KeyReleaseMask, (void *)key_released, &game);
-	mlx_loop_hook(mlx.mlx, (void *)test, &game);
-	mlx_loop(mlx.mlx);
+	c3d_init(&ctx, argc, argv);
+	ctx.buffer = (uint32_t *)mlx_get_data_addr(ctx.mlx.backbuffer,
+			&argc, &argc, &argc);
+	ctx.ceil_col = 0x0000FF;
+	ctx.floor_col = 0x00ff00;
+	ctx.map = (char *[]){"1111111", "1000011", "1111111"};
+	mlx_hook(ctx.mlx.win, KeyPress, KeyPressMask, (void *)key_pressed, &ctx);
+	mlx_hook(ctx.mlx.win, KeyRelease, KeyReleaseMask,
+		(void *)key_released, &ctx);
+	mlx_loop_hook(ctx.mlx.mlx, (void *)test, &ctx);
+	mlx_loop(ctx.mlx.mlx);
 }

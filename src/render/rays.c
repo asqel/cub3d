@@ -6,7 +6,7 @@
 /*   By: axlleres <axlleres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 22:19:32 by axlleres          #+#    #+#             */
-/*   Updated: 2025/08/15 22:54:03 by axlleres         ###   ########.fr       */
+/*   Updated: 2025/08/31 18:43:40 by axlleres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,14 @@ static inline void	init_rays(t_game *game, t_ray *rays, int x, int y)
 	while (--i >= 0)
 	{
 		rays[i].face_hit = -1;
-		rays[i].angle = game->rot - ((FOV * i / WIN_WIDTH) - H_FOV) * TO_RAD;
+		rays[i].angle = game->rot - ((FOV * i / WIN_WIDTH) - FOV / 2)
+			* M_PI / 180;
 		rays[i].dirx = cos(rays[i].angle);
 		rays[i].diry = sin(rays[i].angle);
 		rays[i].m_x = x;
 		rays[i].m_y = y;
 		rays[i].d_dist_x = fabs(1.0 / rays[i].dirx);
 		rays[i].d_dist_y = fabs(1.0 / rays[i].diry);
-		rays[i].has_hit = 0;
 		rays[i].step_x = ((rays[i].dirx >= 0) << 1) - 1;
 		rays[i].step_y = ((rays[i].diry >= 0) << 1) - 1;
 		if (rays[i].dirx < 0)
@@ -78,6 +78,7 @@ void	get_ray(t_game *game, t_ray *rays, int x, int y)
 	i = WIN_WIDTH;
 	while (--i >= 0)
 	{
+		rays[i].has_hit = 0;
 		get_hit(&rays[i], game);
 		if (!rays[i].has_hit)
 			continue ;

@@ -9,7 +9,7 @@ NAME = cub3D
 CC = cc
 LD = cc
 
-CFLAGS = -Wall -Wextra -Werror -Iinclude -Iminilibx-linux -g -Wno-unused-result
+CFLAGS = -Wall -Wextra -Werror -Iinclude -Iminilibx-linux -g -O3
 LDFLAGS = -lm -lX11 -lXext
 
 all: $(NAME)
@@ -31,6 +31,9 @@ fclean: clean
 	rm -rf $(NAME)
 
 re: fclean all
+
+norm:
+	norminette main.c src/ include/
 
 #for f in assets/*.png ; do convert $f ${f/%png/xpm} ; done
 

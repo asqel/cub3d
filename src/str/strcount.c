@@ -6,13 +6,13 @@
 /*   By: axlleres <axlleres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 19:27:40 by axlleres          #+#    #+#             */
-/*   Updated: 2025/07/09 19:29:28 by axlleres         ###   ########.fr       */
+/*   Updated: 2025/08/31 18:44:16 by axlleres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int ft_strcount(char *text, int c)
+int	ft_strcount(char *text, int c)
 {
-	int count;
+	int	count;
 
 	count = 0;
 	while (*text != '\0')
