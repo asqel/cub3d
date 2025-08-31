@@ -13,26 +13,22 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: download Norm
+      - name: Install Norminette
         run: pip install norminette
-      - name: update apt
-        run: sudo add-apt-repository main; \
-          sudo add-apt-repository universe; \
-          sudo add-apt-repository restricted; \
-          sudo add-apt-repository multiverse; \
-          sudo apt-get update;
-      - name: install x11
-        run: sudo apt-get update && sudo apt-get install -y \
-          libx11-dev \
-          libxext-dev \
-          libxrandr-dev \
-          libxinerama-dev \
-          libxcursor-dev \
-          libxi-dev
 
-      - name: Norm
+      - name: Install dependencies (X11 + build tools)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential \
+            libx11-dev \
+            libxext-dev \
+            libxrandr-dev \
+            libxinerama-dev \
+            libxcursor-dev \
+            libxi-dev
+
+      - name: Norm check
         run: norminette src/ include/ main.c
 
       - name: Build
         run: make
-
