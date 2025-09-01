@@ -6,7 +6,7 @@
 /*   By: axlleres <axlleres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 17:26:34 by axlleres          #+#    #+#             */
-/*   Updated: 2025/08/31 18:42:55 by axlleres         ###   ########.fr       */
+/*   Updated: 2025/09/01 17:48:32 by axlleres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,8 @@ void	c3d_tick(t_game *ctx)
 	else if (ctx->key_pressed[KEY_LOOK_RIGHT])
 		ctx->rot -= M_PI / 180 * 1;
 	tick_movement(ctx, 0.04 * (1 + ctx->key_pressed[KEY_SPRINT]));
+	if ((int)ctx->p_x == ctx->p_x)
+		ctx->p_x += 0.01;
+	if ((int)ctx->p_y == ctx->p_y)
+		ctx->p_y += 0.01;
 }
