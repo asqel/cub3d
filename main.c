@@ -116,12 +116,14 @@ int	main(int argc, char **argv)
 {
 	static t_game	ctx;
 
+	ctx.ceil_col = 0xFF000000;
+	ctx.floor_col = 0xFF000000;
+	if (argc != 2)
+		return (c3d_set_err(ERR_ARGS), c3d_print_err(), 1);
+	launch_parsing(&ctx, argv[1]);
 	c3d_init(&ctx, argc, argv);
 	ctx.buffer = (uint32_t *)mlx_get_data_addr(ctx.mlx.backbuffer,
 			&argc, &argc, &argc);
-	ctx.ceil_col = 0x0000FF;
-	ctx.floor_col = 0x00ff00;
-	ctx.map = (char *[]){"1111111", "1000011", "1111111"};
 	mlx_hook(ctx.mlx.win, KeyPress, KeyPressMask, (void *)key_pressed, &ctx);
 	mlx_hook(ctx.mlx.win, KeyRelease, KeyReleaseMask,
 		(void *)key_released, &ctx);

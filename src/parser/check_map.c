@@ -6,7 +6,7 @@
 /*   By: axlleres <axlleres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 16:58:21 by lucmansa          #+#    #+#             */
-/*   Updated: 2025/09/01 13:59:57 by axlleres         ###   ########.fr       */
+/*   Updated: 2025/09/01 14:26:06 by axlleres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	check_wall(char **map)
 
 int	check_map(t_game *game)
 {
-	if (!game->img_path[0] || !game->img_path[1] || !game->img_path[2] || !game->img_path[3] || !game->cell || !game->flor)
+	if (!game->tx_path[0] || !game->tx_path[1] || !game->tx_path[2] || !game->tx_path[3] || !game->cell || !game->flor)
 		return (printf("Mising texture\n"), 1);
 	if (!check_wall(game->map))
 		return (printf("Mising wall\n"), 1);

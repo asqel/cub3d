@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_texture.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucmansa <lucmansa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: axlleres <axlleres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 15:55:21 by lucmansa          #+#    #+#             */
-/*   Updated: 2025/08/12 17:50:01 by lucmansa         ###   ########.fr       */
+/*   Updated: 2025/09/01 14:25:59 by axlleres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,17 +56,17 @@ void	get_texture(t_game *game)
 	int i;
 
 	i = 0;
-	while ((!game->img_path[0] || !game->img_path[1] || !game->img_path[2]
-		|| !game->img_path[3] || !game->cell || !game->flor) && game->map[i])
+	while ((!game->tx_path[0] || !game->tx_path[1] || !game->tx_path[2]
+		|| !game->tx_path[3] || !game->cell || !game->flor) && game->map[i])
 	{
 		if (game->map[i][0] == 'N' && game->map[i][1] == 'O' && game->map[i][2] == ' ')
-			game->img_path[0] = get_str(game->map[i], 2);
+			game->tx_path[0] = get_str(game->map[i], 2);
 		else if (game->map[i][0] == 'S' && game->map[i][1] == 'O' && game->map[i][2] == ' ')
-			game->img_path[1] = get_str(game->map[i], 2);
+			game->tx_path[1] = get_str(game->map[i], 2);
 		else if (game->map[i][0] == 'W' && game->map[i][1] == 'E' && game->map[i][2] == ' ')
-			game->img_path[2] = get_str(game->map[i], 2);
+			game->tx_path[2] = get_str(game->map[i], 2);
 		else if (game->map[i][0] == 'E' && game->map[i][1] == 'A' && game->map[i][2] == ' ')
-			game->img_path[3] = get_str(game->map[i], 2);
+			game->tx_path[3] = get_str(game->map[i], 2);
 		else if (game->map[i][0] == 'F' && game->map[i][1] == ' ')
 			game->flor = get_str(game->map[i], 1);
 		else if (game->map[i][0] == 'C' && game->map[i][1] == ' ')
