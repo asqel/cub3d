@@ -3,14 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   read.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: axlleres <axlleres@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucmansa <lucmansa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 14:29:13 by axlleres          #+#    #+#             */
-/*   Updated: 2025/09/01 14:42:50 by axlleres         ###   ########.fr       */
+/*   Updated: 2025/09/01 16:05:06 by lucmansa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube3d.h"
+
+void	free_split(char **args)
+{
+	int	i;
+
+	i = 0;
+	while (args[i])
+	{
+		free(args[i]);
+		i++;
+	}
+	free(args);
+}
 
 static char	**read_lines_fd(int fd)
 {
@@ -57,7 +70,7 @@ char	**read_lines(char *path)
 	fd = open(path, O_RDONLY);
 	if (fd == -1)
 		return (c3d_set_err(ERR_PERROR), NULL);
-	map = read_map_fd(fd);
+	map = read_lines_fd(fd);
 	if (map)
 		remove_endl(map);
 	return (map);

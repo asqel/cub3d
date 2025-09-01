@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: axlleres <axlleres@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucmansa <lucmansa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 16:24:49 by lucmansa          #+#    #+#             */
-/*   Updated: 2025/09/01 14:48:04 by axlleres         ###   ########.fr       */
+/*   Updated: 2025/09/01 16:37:33 by lucmansa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,9 @@
 
 int	launch_parsing(t_game *game, char *arg)
 {
-	char **lines;
-
-	lines = read_lines(arg);
-	if (!lines)
-		return 1;
+	game->map = read_map(arg);
+	get_texture(game);
+	clean_map(game);
+	get_player(game);
 	return(check_map(game));
 }

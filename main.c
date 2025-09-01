@@ -103,13 +103,15 @@ int	key_released(int keycode, t_game *game)
 	return (0);
 }
 
-void prnt_map(char **map)
+void prnt_info(t_game ctx)
 {
 	int i;
 
 	i = -1;
-	while (map[++i])
-		printf("%s\n", map[i]);
+	while (ctx.map[++i])
+		printf("|%s|\n", ctx.map[i]);
+	printf("p_x : %f, p_y : %f\n", ctx.p_x, ctx.p_y);
+	printf("map height : %i, map width : %i\n", ctx.map_height, ctx.map_width);
 }
 
 int	main(int argc, char **argv)
@@ -119,8 +121,9 @@ int	main(int argc, char **argv)
 	ctx.ceil_col = 0xFF000000;
 	ctx.floor_col = 0xFF000000;
 	if (argc != 2)
-		return (c3d_set_err(ERR_ARGS), c3d_print_err(), 1);
+		return (c3d_set_err(1), c3d_print_err(), 1);
 	launch_parsing(&ctx, argv[1]);
+	prnt_info(ctx);
 	c3d_init(&ctx, argc, argv);
 	ctx.buffer = (uint32_t *)mlx_get_data_addr(ctx.mlx.backbuffer,
 			&argc, &argc, &argc);

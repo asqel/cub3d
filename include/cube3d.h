@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cube3d.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: axlleres <axlleres@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucmansa <lucmansa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 15:43:16 by lucmansa          #+#    #+#             */
-/*   Updated: 2025/09/01 14:03:11 by axlleres         ###   ########.fr       */
+/*   Updated: 2025/09/01 16:30:33 by lucmansa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # undef _USE_MATH_DEFINES
 # define _USE_MATH_DEFINES
+#include <fcntl.h>
 # include <stdio.h>
 # include <stdint.h>
 # include "get_next_line.h"
@@ -132,44 +133,45 @@ typedef struct s_ray
 }	t_ray;
 
 //str_utils
-int		ft_strlen(char *str);
+int			ft_strlen(char *str);
 
-int		c3d_set_err(int err);
-void	c3d_print_err(void);
+int			c3d_set_err(int err);
+void		c3d_print_err(void);
 
-char 	**read_map(char *path);
-void	get_texture(t_game *game);
-void	clean_map(t_game *game);
-int		check_map(t_game *game);
-int		launch_parsing(t_game *game, char *arg);
+char 		**read_map(char *path);
+uint32_t	get_color(char *line);
+void		get_texture(t_game *game);
+void		clean_map(t_game *game);
+int			check_map(t_game *game);
+int 		get_player(t_game *game);
+int			launch_parsing(t_game *game, char *arg);
 
-void	*ft_calloc(size_t size);
-void	*ft_realloc(void *ptr, size_t size, int do_zero);
-void	*ft_malloc(size_t size);
-void	ft_free(void *ptr);
+void		*ft_calloc(size_t size);
+void		*ft_realloc(void *ptr, size_t size, int do_zero);
+void		*ft_malloc(size_t size);
+void		ft_free(void *ptr);
 
-int		ft_strcount(char *text, int c);
-char	**ft_split_lines(char *text, int *len);
+int			ft_strcount(char *text, int c);
+char		**ft_split_lines(char *text, int *len);
 
-void	ft_memcpy(char *dest, const char *src, int len);
-int		c3d_load_texture(void *mlx, char *path, t_img *img);
-void	get_ray(t_game *game, t_ray *rays, int x, int y);
-void	c3d_render(t_game *ctx);
+void		ft_memcpy(char *dest, const char *src, int len);
+int			c3d_load_texture(void *mlx, char *path, t_img *img);
+void		get_ray(t_game *game, t_ray *rays, int x, int y);
+void		c3d_render(t_game *ctx);
 
-void	get_ray(t_game *game, t_ray *rays, int x, int y);
-void	c3d_render(t_game *game);
-void	c3d_init(t_game *ctx, int argc, char **argv);
-void	c3d_tick(t_game *ctx);
-void	c3d_put_img(t_game *game, t_img img, int x, int y);
+void		get_ray(t_game *game, t_ray *rays, int x, int y);
+void		c3d_render(t_game *game);
+void		c3d_init(t_game *ctx, int argc, char **argv);
+void		c3d_tick(t_game *ctx);
+void		c3d_put_img(t_game *game, t_img img, int x, int y);
 
-void	c3d_exit(t_game *ctx, int exit_code);
+void		c3d_exit(t_game *ctx, int exit_code);
 
-
-int	ft_strlen(char *str);
-void	skip_spaces(char *str, int *i);
-int		ft_is_space(char c);
-char	*ft_strdup(const char *s);
-char	*ft_substr(char *s, int start, int len);
+int			ft_strlen(char *str);
+void		skip_spaces(char *str, int *i);
+int			ft_is_space(char c);
+char		*ft_strdup(const char *s);
+char		*ft_substr(char *s, int start, int len);
 
 
 void prnt_map(char **map);
