@@ -6,7 +6,7 @@
 /*   By: axlleres <axlleres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 16:33:17 by lucmansa          #+#    #+#             */
-/*   Updated: 2025/07/09 17:17:01 by axlleres         ###   ########.fr       */
+/*   Updated: 2025/08/31 18:40:10 by axlleres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,16 @@
 
 int	c3d_set_err(int err)
 {
-	static	int error = 0;
+	static int	error = 0;
 
 	if (err)
 		error = err;
 	return (error);
 }
 
-char *c3d_get_err_msg(int err)
+char	*c3d_get_err_msg(int err)
 {
-	static char *errors[] = {
+	static char	*errors[] = {
 		"",
 		"",
 		""
@@ -33,12 +33,14 @@ char *c3d_get_err_msg(int err)
 	return (errors[err]);
 }
 
-void c3d_print_err() {
-	int error;
+void	c3d_print_err(void)
+{
+	int	error;
 
 	error = c3d_set_err(0);
 	if (error == 42)
-		return ((void)perror("cube3d"));
-	write(STDERR_FILENO, "cube3d: ", 8);
-	write(STDERR_FILENO, c3d_get_err_msg(error), ft_strlen(c3d_get_err_msg(error)));
+		return ((void)perror("cub3d"));
+	error = write(STDERR_FILENO, "cub3d: ", 8);
+	error = write(STDERR_FILENO, c3d_get_err_msg(error),
+			ft_strlen(c3d_get_err_msg(error)));
 }

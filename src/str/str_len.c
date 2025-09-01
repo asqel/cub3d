@@ -6,7 +6,7 @@
 /*   By: axlleres <axlleres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 17:02:13 by lucmansa          #+#    #+#             */
-/*   Updated: 2025/07/09 17:04:20 by axlleres         ###   ########.fr       */
+/*   Updated: 2025/08/31 18:44:40 by axlleres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,4 @@ int	ft_strlen(char *str)
 	while (str[i])
 		i++;
 	return (i);
-
 }
