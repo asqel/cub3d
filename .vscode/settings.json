@@ -3,7 +3,7 @@
 		"cube3d.h": "c",
 		"mlx_int.h": "c",
 		"stdint.h": "c",
-		"map": "c",
-		"format": "c"
+		"time.h": "c",
+		"mlx.h": "c"
 	}
 }

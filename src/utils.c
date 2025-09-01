@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucmansa <lucmansa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: axlleres <axlleres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 17:20:44 by lucmansa          #+#    #+#             */
-/*   Updated: 2025/08/12 15:59:58 by lucmansa         ###   ########.fr       */
+/*   Updated: 2025/09/01 13:54:19 by axlleres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	skip_spaces(char *str, int *i)
 
 int	ft_is_space(char c)
 {
-	if (c == ' ' || c == '\f'  || c == '\n' || c == '\r'
+	if (c == ' ' || c == '\f' || c == '\n' || c == '\r'
 		|| c == '\t' || c == '\v')
 		return (1);
 	return (0);
