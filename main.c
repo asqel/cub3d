@@ -118,8 +118,8 @@ int	main(int argc, char **argv)
 {
 	static t_game	ctx;
 
-	ctx.ceil_col = 0xFF000000;
-	ctx.floor_col = 0xFF000000;
+	ctx.ceil_col = 0xFFFFFF00;
+	ctx.floor_col = 0xa1ff9000;
 	if (argc != 2)
 		return (c3d_set_err(1), c3d_print_err(), 1);
 	launch_parsing(&ctx, argv[1]);

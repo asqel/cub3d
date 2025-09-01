@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: axlleres <axlleres@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucmansa <lucmansa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 17:24:25 by axlleres          #+#    #+#             */
-/*   Updated: 2025/08/30 17:25:51 by axlleres         ###   ########.fr       */
+/*   Updated: 2025/09/01 17:14:46 by lucmansa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,11 @@ static inline void	draw_wall(t_game *ctx, int x, t_ray *ray)
 	int	y_end;
 
 	height = ((int)(WIN_HEIGHT / (ray->dist)));
+	if (height < 0)
+		height = 0;
 	y_start = (WIN_HEIGHT - height) / 2;
 	y_end = y_start + height;
+	printf("height : %i, ystart : %i, yend : %i, ray->dist : %f\n", height, y_start, y_end, ray->dist);
 	do_wall_ceil_floor(ctx, x, y_start, y_end);
 	if (height > 0)
 		copy_wall(ctx, y_start * WIN_WIDTH + x, height, ray);
