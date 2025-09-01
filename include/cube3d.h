@@ -6,7 +6,7 @@
 /*   By: axlleres <axlleres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 15:43:16 by lucmansa          #+#    #+#             */
-/*   Updated: 2025/09/01 13:52:28 by axlleres         ###   ########.fr       */
+/*   Updated: 2025/09/01 14:03:11 by axlleres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,18 +94,19 @@ typedef struct s_mlx
 
 typedef struct s_game
 {
-	t_mlx		mlx;
-	char		**map;
-	int			map_height;
-	int			map_width;
-	t_img		textures[TX_ENUM_MAX];
 	double		p_x;
 	double		p_y;
 	double		rot;
-	int			key_pressed[KEY_ENUM_MAX];
+	t_mlx		mlx;
 	uint32_t	*buffer;
+	int			key_pressed[KEY_ENUM_MAX];
+	t_img		textures[TX_ENUM_MAX];
 	uint32_t	ceil_col;
 	uint32_t	floor_col;
+	char		**map;
+	int			map_height;
+	int			map_width;
+	char		*tx_path[4];
 }	t_game;
 
 typedef struct s_ray
