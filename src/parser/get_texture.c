@@ -6,7 +6,7 @@
 /*   By: lucmansa <lucmansa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 15:55:21 by lucmansa          #+#    #+#             */
-/*   Updated: 2025/09/01 16:18:57 by lucmansa         ###   ########.fr       */
+/*   Updated: 2025/09/02 19:05:50 by lucmansa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,9 @@ void	get_texture(t_game *game)
 
 	i = 0;
 	while ((!game->tx_path[0] || !game->tx_path[1] || !game->tx_path[2]
-		|| !game->tx_path[3] || !game->ceil_col || !game->floor_col) && game->map[i])
+		|| !game->tx_path[3] || game->ceil_col == 0xFF000000 || game->floor_col == 0xFF000000) && game->map[i])
 	{
+		printf("reading %s\n", game->map[i]);
 		if (game->map[i][0] == 'N' && game->map[i][1] == 'O' && game->map[i][2] == ' ')
 			game->tx_path[0] = get_str(game->map[i], 2);
 		else if (game->map[i][0] == 'S' && game->map[i][1] == 'O' && game->map[i][2] == ' ')

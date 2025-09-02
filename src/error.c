@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: axlleres <axlleres@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucmansa <lucmansa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 16:33:17 by lucmansa          #+#    #+#             */
-/*   Updated: 2025/09/01 13:53:08 by axlleres         ###   ########.fr       */
+/*   Updated: 2025/09/02 18:39:31 by lucmansa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,10 @@ char	*c3d_get_err_msg(int err)
 {
 	static char	*errors[] = {
 		"",
-		"",
-		""
+		"only 1 argument is requiered\n",
+		"Mising texture\n",
+		"Mising floor or ceiling color\n",
+		"Mising wall\n"
 	};
 
 	return (errors[err]);
@@ -41,6 +43,6 @@ void	c3d_print_err(void)
 	if (error == 42)
 		return ((void)perror("cub3d"));
 	error = write(STDERR_FILENO, "cub3d: ", 8);
-	error = write(STDERR_FILENO, c3d_get_err_msg(error),
-			ft_strlen(c3d_get_err_msg(error)));
+	error = write(STDERR_FILENO, c3d_get_err_msg(c3d_set_err(0)),
+			ft_strlen(c3d_get_err_msg(c3d_set_err(0))));
 }

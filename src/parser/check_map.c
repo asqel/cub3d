@@ -6,31 +6,25 @@
 /*   By: lucmansa <lucmansa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 16:58:21 by lucmansa          #+#    #+#             */
-/*   Updated: 2025/09/01 16:24:31 by lucmansa         ###   ########.fr       */
+/*   Updated: 2025/09/02 18:40:28 by lucmansa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube3d.h"
 
-int	get_size(char **map, char c)
+int	check_pos(char **map, int x, int y)
 {
-	int i;
-
-	i = 0;
-	if (c == 'h')
-	{
-		while (map[i])
-			i++;
-		return (i);
-	}
-		i = 0;
-	if (c == 'w')
-	{
-		while (map[3][i])
-			i++;
-		return (i);
-	}
-	return (0);
+	if (x == 0)
+		return 1;
+	if (map[y][x + 1] == '\0')
+		return 1;
+	if (y == 0)
+		return 1;
+	if (map[y + 1] == NULL)
+		return 1;
+	if ((map[y][x + 1] != '1' && map[y][x + 1] != '0') || (map[y][x - 1] != '1' && map[y][x - 1] != '0'))
+		return 1;
+	return ((map[y + 1][x] != '1' && map[y + 1][x] != '0') || (map[y - 1][x] != '1' && map[y - 1][x] != '0'));
 }
 
 int	check_wall(char **map)
@@ -44,9 +38,8 @@ int	check_wall(char **map)
 		j = -1;
 		while (map[i][++j])
 		{
-			if (map[i][j] == '0' || map[i][j] == 'N' || map[i][j] == 'S' || map[i][j] == 'W' || map[i][j] == 'E')
-				if ((map[i + 1][j] != '1' || map[i + 1][j] != '0') && (map[i - 1][j] != '1' || map[i - 1][j] != '0') && (map[i][j + 1] != '1' || map[i][j + 1] != '0') && (map[i][j - 1] != '1' || map[i][j - 1] != '0'))
-					return (1);
+			if (map[i][j] == '0' && check_pos(map, j, i)) 
+				return (0);
 		}
 	}
 	return (1);
@@ -54,11 +47,11 @@ int	check_wall(char **map)
 
 int	check_map(t_game *game)
 {
-	if (!game->tx_path[0] || !game->tx_path[1] || !game->tx_path[2] || !game->tx_path[3] || !game->ceil_col || !game->floor_col)
-		return (printf("Mising texture\n"), 1);
+	if (!game->tx_path[0] || !game->tx_path[1] || !game->tx_path[2] || !game->tx_path[3])
+		return (c3d_set_err(ERR_TEXTURE), 1);
+	if (game->ceil_col == 0xFF000000 || game->floor_col == 0xFF000000)
+		return (c3d_set_err(ERR_COLOR), 1);
 	if (!check_wall(game->map))
-		return (printf("Mising wall\n"), 1);
-	game->map_height = get_size(game->map, 'h');
-	game->map_width = get_size(game->map, 'w');
+		return (c3d_set_err(ERR_WALL), 1);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: lucmansa <lucmansa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 15:43:16 by lucmansa          #+#    #+#             */
-/*   Updated: 2025/09/01 16:30:33 by lucmansa         ###   ########.fr       */
+/*   Updated: 2025/09/02 18:37:40 by lucmansa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,13 @@
 # include <math.h>
 # include <stdlib.h>
 # include <mlx.h>
+# include <mlx.h>
+# include <math.h>
+# include <X11/keysym.h>
+# include <X11/X.h>
+# include <stdlib.h>
+# include <stdio.h>
+# include <sys/time.h>
 
 # define FOV 50.0
 
@@ -36,8 +43,11 @@
 
 //err
 # define ERR_NONE 0
-# define ERR_BIN 1
+# define ERR_ARG 1
 # define ERR_PERROR 42
+# define ERR_TEXTURE 2
+# define ERR_COLOR 3
+# define ERR_WALL 4
 
 enum e_keys
 {
@@ -132,7 +142,6 @@ typedef struct s_ray
 	double	step_y;
 }	t_ray;
 
-//str_utils
 int			ft_strlen(char *str);
 
 int			c3d_set_err(int err);
@@ -172,6 +181,10 @@ void		skip_spaces(char *str, int *i);
 int			ft_is_space(char c);
 char		*ft_strdup(const char *s);
 char		*ft_substr(char *s, int start, int len);
+void		display_fps(t_game *game, int64_t fps);
+int			tick_hook(void *param);
+int			key_pressed(int keycode, t_game *game);
+int			key_released(int keycode, t_game *game);
 
 
 void prnt_map(char **map);

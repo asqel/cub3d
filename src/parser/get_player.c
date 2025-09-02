@@ -6,7 +6,7 @@
 /*   By: lucmansa <lucmansa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 15:30:54 by lucmansa          #+#    #+#             */
-/*   Updated: 2025/09/01 17:28:45 by lucmansa         ###   ########.fr       */
+/*   Updated: 2025/09/02 15:29:34 by lucmansa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ int get_player(t_game *game)
 					game->rot = M_PI / 180 * 90;
 				if (game->map[x][y] == 'S')
 					game->rot = M_PI / 180 * 270;
-				game->p_x = x;
-				game->p_y = y;
+				game->p_x = x + 0.5;
+				game->p_y = y + 0.5;
 				game->map[x][y] = '0';
 				return (1);
 			}

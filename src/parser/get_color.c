@@ -6,47 +6,63 @@
 /*   By: lucmansa <lucmansa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 15:46:38 by lucmansa          #+#    #+#             */
-/*   Updated: 2025/09/01 15:59:42 by lucmansa         ###   ########.fr       */
+/*   Updated: 2025/09/02 19:09:59 by lucmansa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube3d.h"
 
-
-int	ft_atoi(const char *nptr, int *s)
+static void skip_space_ptr(char **line)
 {
-	int	nbr;
-	int	i;
-	int	sign;
+	while (ft_is_space(**line))
+		(*line)++;
+}
 
-	nbr = 0;
+static int get_component(char **line, int *err)
+{
+	int	len;
+	int	i;
+	int	res;
+
+	*err = 1;
+	len = 0;
+	while ('0' <= (*line)[len] && (*line)[len] <= '9')
+		len++;
+	if (len == 0 || len > 3)
+		return 0;
 	i = 0;
-	sign = 1;
-	while (nptr[i + *s] == ' ' || (nptr[i] >= '\t' && nptr[i] <= '\r'))
-		i++;
-	if (nptr[i + *s] == '-' || nptr[i + *s] == '+')
-		if (nptr[i++ + *s] == '-')
-			sign *= -1;
-	while (nptr[i + *s] >= '0' && nptr[i + *s] <= '9')
-		nbr = nbr * 10 + (nptr[i++ + *s] - '0');
-	s += i;
-	return (nbr * sign);
+	res = 0;
+	while (i < len)
+		res = res * 10 + ((*line)[i++] - '0');
+	if (res > 255)
+		return 0;
+	*err = 0;
+	*line += len;
+	return res;
+
 }
 
 uint32_t	get_color(char *line)
 {
-	int	r;
-	int	g;
-	int	b;
-	int	i;
-
-	i = 0;
-	while (line[i] < '0' || line[i] > '9')
-		i++;
-	r = ft_atoi(line, &i);
-	i ++;
-	g = ft_atoi(line, &i);
-	i ++;
-	b = ft_atoi(line, &i);
-	return((r<<16)|(g<<8)|b);
+	int component[3];
+	int err;
+	
+	line++;
+	skip_space_ptr(&line);
+	component[0] = get_component(&line, &err);
+	skip_space_ptr(&line);
+	if (*line != ',' || err)
+		return 0xFF000000;
+	line++;
+	skip_space_ptr(&line);
+	component[1] = get_component(&line, &err);
+	skip_space_ptr(&line);
+	if (*line != ',' || err)
+		return 0xFF000000;
+	line++;
+	skip_space_ptr(&line);
+	component[2] = get_component(&line, &err);
+	if (err)
+		return 0xFF000000;
+	return ((component[0] << 16) | (component[1] << 8) | component[2]);
 }

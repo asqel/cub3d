@@ -6,12 +6,28 @@
 /*   By: lucmansa <lucmansa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 17:27:02 by lucmansa          #+#    #+#             */
-/*   Updated: 2025/08/12 18:15:00 by lucmansa         ###   ########.fr       */
+/*   Updated: 2025/09/02 19:15:07 by lucmansa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube3d.h"
 
+void	get_map_size(t_game *game)
+{
+	int x;
+	int	y;
+	
+	y = -1;
+	while (game->map[++y])
+	{
+		x = 0;
+		while (game->map[y][x])
+			x++;
+		if (x > game->map_width)
+			game->map_width = x;
+	}
+	game->map_height = y;
+}
 
 void	remove_line(char ***map, int i)
 {
@@ -21,6 +37,18 @@ void	remove_line(char ***map, int i)
 		i++;
 	}
 	(*map)[i] = NULL;
+}
+
+void	resize_map(t_game *game)
+{
+	int	i;
+
+	i = -1;
+	while (++i < game->map_height)
+		if (ft_strlen(game->map[i]) < game->map_width)
+		{
+			game->map[i] = ft_realloc(game->map[i], sizeof(char) * game->map_width + 1, 1);
+		}
 }
 
 void	clean_map(t_game *game)
@@ -40,4 +68,6 @@ void	clean_map(t_game *game)
 		else
 			i++;
 	}
+	get_map_size(game);
+	resize_map(game);
 }
