@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucmansa <lucmansa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: axlleres <axlleres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 17:27:02 by lucmansa          #+#    #+#             */
-/*   Updated: 2025/09/02 19:15:07 by lucmansa         ###   ########.fr       */
+/*   Updated: 2025/09/03 00:24:04 by axlleres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	get_map_size(t_game *game)
 {
 	int x;
 	int	y;
-	
+
 	y = -1;
 	while (game->map[++y])
 	{
@@ -42,12 +42,16 @@ void	remove_line(char ***map, int i)
 void	resize_map(t_game *game)
 {
 	int	i;
+	int	k;
 
 	i = -1;
 	while (++i < game->map_height)
 		if (ft_strlen(game->map[i]) < game->map_width)
 		{
 			game->map[i] = ft_realloc(game->map[i], sizeof(char) * game->map_width + 1, 1);
+			k = ft_strlen(game->map[i]);
+			while (k < game->map_width)
+				game->map[i][k++] = ' ';
 		}
 }
 
