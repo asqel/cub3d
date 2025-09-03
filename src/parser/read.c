@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucmansa <lucmansa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: axlleres <axlleres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 14:29:13 by axlleres          #+#    #+#             */
-/*   Updated: 2025/09/01 16:05:06 by lucmansa         ###   ########.fr       */
+/*   Updated: 2025/09/03 14:37:12 by axlleres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,11 @@ static char	**read_lines_fd(int fd)
 		len++;
 		tmp = ft_realloc(map, sizeof(char *) * (len + 1), 1);
 		if (!tmp)
-			return (free_split(map), c3d_set_err(ERR_PERROR), NULL);
+			return (free_split(map), c3d_set_err(ERR_PERROR, NULL, NULL), NULL);
 		map = tmp;
 		map[len - 1] = get_next_line(fd);
 		if (!map[len - 1])
-			return (free_split(map), c3d_set_err(ERR_PERROR), NULL);
+			return (free_split(map), c3d_set_err(ERR_PERROR, NULL, NULL), NULL);
 		len++;
 	}
 	return (map);
@@ -69,7 +69,7 @@ char	**read_lines(char *path)
 
 	fd = open(path, O_RDONLY);
 	if (fd == -1)
-		return (c3d_set_err(ERR_PERROR), NULL);
+		return (c3d_set_err(ERR_PERROR, path, NULL), NULL);
 	map = read_lines_fd(fd);
 	if (map)
 		remove_endl(map);

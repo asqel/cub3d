@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucmansa <lucmansa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: axlleres <axlleres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 16:58:21 by lucmansa          #+#    #+#             */
-/*   Updated: 2025/09/02 18:40:28 by lucmansa         ###   ########.fr       */
+/*   Updated: 2025/09/03 14:35:57 by axlleres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	check_wall(char **map)
 		j = -1;
 		while (map[i][++j])
 		{
-			if (map[i][j] == '0' && check_pos(map, j, i)) 
+			if (map[i][j] == '0' && check_pos(map, j, i))
 				return (0);
 		}
 	}
@@ -48,10 +48,10 @@ int	check_wall(char **map)
 int	check_map(t_game *game)
 {
 	if (!game->tx_path[0] || !game->tx_path[1] || !game->tx_path[2] || !game->tx_path[3])
-		return (c3d_set_err(ERR_TEXTURE), 1);
+		return (c3d_set_err(ERR_TEXTURE, NULL, NULL), 1);
 	if (game->ceil_col == 0xFF000000 || game->floor_col == 0xFF000000)
-		return (c3d_set_err(ERR_COLOR), 1);
+		return (c3d_set_err(ERR_COLOR, NULL, NULL), 1);
 	if (!check_wall(game->map))
-		return (c3d_set_err(ERR_WALL), 1);
+		return (c3d_set_err(ERR_WALL, NULL, NULL), 1);
 	return (0);
 }

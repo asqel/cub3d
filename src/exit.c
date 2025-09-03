@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucmansa <lucmansa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: axlleres <axlleres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 16:21:14 by axlleres          #+#    #+#             */
-/*   Updated: 2025/09/02 18:35:03 by lucmansa         ###   ########.fr       */
+/*   Updated: 2025/09/03 14:43:36 by axlleres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,13 @@ void	free_mlx(t_game *ctx)
 
 void	c3d_exit(t_game *ctx, int exit_code)
 {
+	static char *err_info;
+
 	if (ctx == NULL)
 		exit(exit_code);
 	free_textures(ctx);
 	free_mlx(ctx);
+	c3d_set_err(1, NULL, &err_info);
+	ft_free(err_info);
 	exit(exit_code);
 }

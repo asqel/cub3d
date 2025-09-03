@@ -4,6 +4,7 @@
 		"mlx_int.h": "c",
 		"stdint.h": "c",
 		"time.h": "c",
-		"mlx.h": "c"
+		"mlx.h": "c",
+		"cstdlib": "c"
 	}
 }

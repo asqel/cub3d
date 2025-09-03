@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cube3d.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucmansa <lucmansa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: axlleres <axlleres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 15:43:16 by lucmansa          #+#    #+#             */
-/*   Updated: 2025/09/02 18:37:40 by lucmansa         ###   ########.fr       */
+/*   Updated: 2025/09/03 14:35:40 by axlleres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,7 @@ typedef struct s_ray
 
 int			ft_strlen(char *str);
 
-int			c3d_set_err(int err);
+int			c3d_set_err(int err, char *info, char **get_info);
 void		c3d_print_err(void);
 
 char 		**read_map(char *path);

@@ -6,7 +6,7 @@
 /*   By: axlleres <axlleres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 17:20:44 by lucmansa          #+#    #+#             */
-/*   Updated: 2025/09/01 13:54:19 by axlleres         ###   ########.fr       */
+/*   Updated: 2025/09/03 14:28:43 by axlleres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*ft_substr(char *s, int start, int len)
 		len = 0;
 	if (ft_strlen(s) - start < len)
 		len = ft_strlen(s) - start;
-	str = (char *)malloc(len + 1);
+	str = (char *)ft_malloc(len + 1);
 	if (!str)
 		return (NULL);
 	i = 0;
@@ -59,7 +59,7 @@ char	*ft_strdup(const char *s)
 	len = 0;
 	while (s[len] != '\0')
 		len++;
-	res = malloc(sizeof(char) * (len + 1));
+	res = ft_malloc(sizeof(char) * (len + 1));
 	if (res == NULL)
 		return (res);
 	len = 0;

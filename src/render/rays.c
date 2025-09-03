@@ -6,7 +6,7 @@
 /*   By: axlleres <axlleres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 22:19:32 by axlleres          #+#    #+#             */
-/*   Updated: 2025/08/31 18:43:40 by axlleres         ###   ########.fr       */
+/*   Updated: 2025/09/03 15:17:47 by axlleres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,13 @@ static inline void	get_hit(t_ray *ray, t_game *game)
 	}
 }
 
+static void	fix_texture_percent(t_ray *ray)
+{
+	ray->texture_percent -= floor(ray->texture_percent);
+	if (ray->face_hit == DIR_SOUTH || ray->face_hit == DIR_EAST)
+		ray->texture_percent = 1 - ray->texture_percent;
+}
+
 void	get_ray(t_game *game, t_ray *rays, int x, int y)
 {
 	int	i;
@@ -90,11 +97,11 @@ void	get_ray(t_game *game, t_ray *rays, int x, int y)
 			rays[i].texture_percent = game->p_y + rays[i].dist * rays[i].diry;
 		else
 			rays[i].texture_percent = game->p_x + rays[i].dist * rays[i].dirx;
-		rays[i].texture_percent -= floor((rays[i].texture_percent));
 		if (!rays[i].hit_horizontal)
 			rays[i].face_hit = DIR_WEST - ((rays[i].dirx > 0) << 1);
 		else
 			rays[i].face_hit = DIR_NORTH + ((rays[i].diry < 0) << 1);
+		fix_texture_percent(&rays[i]);
 		rays[i].dist *= cos(rays[i].angle - game->rot);
 	}
 }

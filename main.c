@@ -31,7 +31,7 @@ int	main(int argc, char **argv)
 	ctx.ceil_col = 0xFF000000;
 	ctx.floor_col = 0xFF000000;
 	if (argc != 2)
-		return (c3d_set_err(ERR_ARG), c3d_print_err(), 1);
+		return (c3d_set_err(ERR_ARG, NULL, NULL), c3d_print_err(), 1);
 	if (launch_parsing(&ctx, argv[1]))
 		return (c3d_print_err(), c3d_exit(&ctx, 1), 1);
 	prnt_info(ctx);
