@@ -21,7 +21,6 @@ void prnt_info(t_game ctx)
 		printf("|%s|\n", ctx.map[i]);
 	printf("p_x : %f, p_y : %f\n", ctx.p_x, ctx.p_y);
 	printf("map height : %i, map width : %i\n", ctx.map_height, ctx.map_width);
-	printf("ddddddddddd %d\n", ctx.map[3][9]);
 }
 
 int	main(int argc, char **argv)
@@ -38,6 +37,7 @@ int	main(int argc, char **argv)
 	c3d_init(&ctx, argc, argv);
 	ctx.buffer = (uint32_t *)mlx_get_data_addr(ctx.mlx.backbuffer,
 			&argc, &argc, &argc);
+	printf("pos %f %f\n", ctx.p_x, ctx.p_y);
 	mlx_hook(ctx.mlx.win, KeyPress, KeyPressMask, (void *)key_pressed, &ctx);
 	mlx_hook(ctx.mlx.win, KeyRelease, KeyReleaseMask,
 		(void *)key_released, &ctx);

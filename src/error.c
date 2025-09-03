@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: axlleres <axlleres@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucmansa <lucmansa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 16:33:17 by lucmansa          #+#    #+#             */
-/*   Updated: 2025/09/03 14:42:44 by axlleres         ###   ########.fr       */
+/*   Updated: 2025/09/03 18:21:54 by lucmansa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,13 @@ char	*c3d_get_err_msg(int err)
 {
 	static char	*errors[] = {
 		"",
-		"only 1 argument is requiered\n",
-		"Mising texture\n",
-		"Mising floor or ceiling color\n",
-		"Mising wall\n",
+		"Only 1 argument is requiered",
+		"Mising texture",
+		"Mising floor or ceiling color",
+		"Mising wall",
+		"Missing player",
+		"Texture or color in double",
+		"Invalid character in map",
 		NULL
 	};
 
@@ -68,7 +71,7 @@ void	c3d_print_err(void)
 			ft_strlen(c3d_get_err_msg(c3d_set_err(0, NULL, NULL))));
 	c3d_set_err(0, NULL, &info);
 	if (info)
-		perror(info);
+		error = write(STDERR_FILENO, info, ft_strlen(info));
 	ft_free(info);
 	c3d_set_err(-1, NULL, NULL);
 }

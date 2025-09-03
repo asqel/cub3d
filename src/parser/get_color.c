@@ -6,7 +6,7 @@
 /*   By: lucmansa <lucmansa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 15:46:38 by lucmansa          #+#    #+#             */
-/*   Updated: 2025/09/02 19:09:59 by lucmansa         ###   ########.fr       */
+/*   Updated: 2025/09/03 17:45:20 by lucmansa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,13 @@ static int get_component(char **line, int *err)
 	while ('0' <= (*line)[len] && (*line)[len] <= '9')
 		len++;
 	if (len == 0 || len > 3)
-		return 0;
+		return (c3d_set_err(0, " invalid value", NULL), 0);
 	i = 0;
 	res = 0;
 	while (i < len)
 		res = res * 10 + ((*line)[i++] - '0');
 	if (res > 255)
-		return 0;
+		return (c3d_set_err(0, " invalid value", NULL), 0);
 	*err = 0;
 	*line += len;
 	return res;

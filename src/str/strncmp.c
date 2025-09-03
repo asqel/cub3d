@@ -1,26 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
+/*   strncmp.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lucmansa <lucmansa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/09 16:24:49 by lucmansa          #+#    #+#             */
-/*   Updated: 2025/09/03 16:35:18 by lucmansa         ###   ########.fr       */
+/*   Created: 2025/09/03 16:47:23 by lucmansa          #+#    #+#             */
+/*   Updated: 2025/09/03 16:47:34 by lucmansa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube3d.h"
 
-int	launch_parsing(t_game *game, char *arg)
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-	game->map = read_map(arg);
-	if (!game->map)
-		return(c3d_set_err(ERR_PERROR, arg, NULL), 1);
-	if (get_texture(game))
-		return(c3d_set_err(ERR_MLTTX, arg, NULL), 1);
-	clean_map(game);
-	if (!get_player(game))
-		return(c3d_set_err(ERR_PLAYER, arg, NULL), 1);
-	return(check_map(game));
+	size_t	p;
+
+	p = 0;
+	while (p < n && s1[p] != '\0' && s2[p] != '\0')
+	{
+		if (s1[p] != s2[p])
+			return ((unsigned char)s1[p] - (unsigned char)s2[p]);
+		p++;
+	}
+	if (p == n)
+		return (0);
+	return ((unsigned char)s1[p] - (unsigned char)s2[p]);
 }

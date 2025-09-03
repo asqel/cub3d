@@ -6,7 +6,7 @@
 /*   By: lucmansa <lucmansa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 17:57:58 by lucmansa          #+#    #+#             */
-/*   Updated: 2025/09/02 18:41:09 by lucmansa         ###   ########.fr       */
+/*   Updated: 2025/09/03 18:24:19 by lucmansa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ static char	**read_map_fd(int fd)
 	}
 	return (map);
 }
+
 char **read_map(char *path)
 {
 	int	fd;

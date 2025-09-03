@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: axlleres <axlleres@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucmansa <lucmansa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 16:58:21 by lucmansa          #+#    #+#             */
-/*   Updated: 2025/09/03 14:35:57 by axlleres         ###   ########.fr       */
+/*   Updated: 2025/09/03 18:43:18 by lucmansa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,22 @@ int	check_wall(char **map)
 	return (1);
 }
 
+int	check_char(t_game *game)
+{
+	int	x;
+	int	y;
+
+	y = -1;
+	while (++y < game->map_height)
+	{
+		x = -1;
+		while (++x < game->map_width)
+			if (ft_strchr("01 ", game->map[y][x]) < 0)
+				return (1);
+	}
+	return (0);
+}
+
 int	check_map(t_game *game)
 {
 	if (!game->tx_path[0] || !game->tx_path[1] || !game->tx_path[2] || !game->tx_path[3])
@@ -53,5 +69,7 @@ int	check_map(t_game *game)
 		return (c3d_set_err(ERR_COLOR, NULL, NULL), 1);
 	if (!check_wall(game->map))
 		return (c3d_set_err(ERR_WALL, NULL, NULL), 1);
+	if (check_char(game))
+		return (c3d_set_err(ERR_CHAR, NULL, NULL), 1);
 	return (0);
 }

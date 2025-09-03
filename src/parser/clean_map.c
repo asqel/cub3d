@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: axlleres <axlleres@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucmansa <lucmansa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 17:27:02 by lucmansa          #+#    #+#             */
-/*   Updated: 2025/09/03 00:24:04 by axlleres         ###   ########.fr       */
+/*   Updated: 2025/09/03 15:55:28 by lucmansa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,10 @@ void	clean_map(t_game *game)
 		|| (game->map[i][0] == 'E' && game->map[i][1] == 'A' && game->map[i][2] == ' ')
 		|| (game->map[i][0] == 'F' && game->map[i][1] == ' ')
 		|| (game->map[i][0] == 'C' && game->map[i][1] == ' '))
+		{
+			ft_free(game->map[i]);
 			remove_line(&game->map, i);
+		}
 		else
 			i++;
 	}

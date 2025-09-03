@@ -5,6 +5,7 @@
 		"stdint.h": "c",
 		"time.h": "c",
 		"mlx.h": "c",
-		"cstdlib": "c"
+		"cstdlib": "c",
+		"cstring": "c"
 	}
 }

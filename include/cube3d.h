@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cube3d.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: axlleres <axlleres@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucmansa <lucmansa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 15:43:16 by lucmansa          #+#    #+#             */
-/*   Updated: 2025/09/03 14:35:40 by axlleres         ###   ########.fr       */
+/*   Updated: 2025/09/03 18:21:27 by lucmansa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,19 @@
 # define WIN_HEIGHT 700
 
 //err
-# define ERR_NONE 0
-# define ERR_ARG 1
 # define ERR_PERROR 42
-# define ERR_TEXTURE 2
-# define ERR_COLOR 3
-# define ERR_WALL 4
+
+enum e_error
+{
+	ERR_NONE,
+	ERR_ARG,
+	ERR_TEXTURE,
+	ERR_COLOR,
+	ERR_WALL,
+	ERR_PLAYER,
+	ERR_MLTTX,
+	ERR_CHAR
+};
 
 enum e_keys
 {
@@ -149,7 +156,7 @@ void		c3d_print_err(void);
 
 char 		**read_map(char *path);
 uint32_t	get_color(char *line);
-void		get_texture(t_game *game);
+int			get_texture(t_game *game);
 void		clean_map(t_game *game);
 int			check_map(t_game *game);
 int 		get_player(t_game *game);
@@ -181,6 +188,7 @@ void		skip_spaces(char *str, int *i);
 int			ft_is_space(char c);
 char		*ft_strdup(const char *s);
 char		*ft_substr(char *s, int start, int len);
+int			ft_strncmp(const char *s1, const char *s2, size_t n);
 void		display_fps(t_game *game, int64_t fps);
 int			tick_hook(void *param);
 int			key_pressed(int keycode, t_game *game);
