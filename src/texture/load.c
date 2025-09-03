@@ -32,6 +32,7 @@ static int	convert(t_img_data *data, t_img *img)
 					* data->line_length + x * (data->bits_per_pixel >> 3));
 		offset += img->width;
 	}
+	img->limit = &img->data[img->width * img->height];
 	return (0);
 }
 

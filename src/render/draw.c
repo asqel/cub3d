@@ -38,6 +38,8 @@ static inline void	copy_wall(t_game *ctx, int pos, int len, t_ray *ray)
 		pos += i * WIN_WIDTH;
 		i *= step;
 	}
+	if (column + (int)i * (len - 1) >= ctx->textures[ray->face_hit].limit)
+		len = (ctx->textures[ray->face_hit].data - column) / + 1;
 	while (len-- > 0 && pos < WIN_WIDTH * WIN_HEIGHT)
 	{
 		ctx->buffer[pos] = column[(int)i];

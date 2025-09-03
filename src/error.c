@@ -57,7 +57,7 @@ void	c3d_print_err(void)
 	error = c3d_set_err(0, NULL, NULL);
 	if (error == 42)
 	{
-		write(STDERR_FILENO, "cub3D: ", 7);
+		error = write(STDERR_FILENO, "cub3D: ", 7);
 		info = NULL;
 		c3d_set_err(0, NULL, &info);
 		if (info)

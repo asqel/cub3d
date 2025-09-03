@@ -41,6 +41,8 @@ int	key_pressed(int keycode, t_game *game)
 		game->key_pressed[KEY_LOOK_RIGHT] = 1;
 	else if (keycode == XK_Escape)
 		c3d_exit(game, 0);
+	else if (keycode == XK_space)
+		printf("%f %f\n", game->p_x, game->p_y);
 	return (0);
 }
 

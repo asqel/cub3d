@@ -101,6 +101,7 @@ typedef struct s_img
 	int			width;
 	int			height;
 	uint32_t	*data;
+	uint32_t	*limit;
 }	t_img;
 
 typedef struct s_mlx
