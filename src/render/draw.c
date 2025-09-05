@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucmansa <lucmansa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: axlleres <axlleres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 17:24:25 by axlleres          #+#    #+#             */
-/*   Updated: 2025/09/01 17:27:48 by lucmansa         ###   ########.fr       */
+/*   Updated: 2025/09/05 20:18:30 by axlleres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,6 @@ static inline void	copy_wall(t_game *ctx, int pos, int len, t_ray *ray)
 		pos += i * WIN_WIDTH;
 		i *= step;
 	}
-	if (column + (int)i * (len - 1) >= ctx->textures[ray->face_hit].limit)
-		len = (ctx->textures[ray->face_hit].data - column) / + 1;
 	while (len-- > 0 && pos < WIN_WIDTH * WIN_HEIGHT)
 	{
 		ctx->buffer[pos] = column[(int)i];
@@ -60,13 +58,16 @@ static inline void	do_wall_ceil_floor(t_game *ctx, int x, int ceil_end,
 
 static inline void	draw_wall(t_game *ctx, int x, t_ray *ray)
 {
-	int	height;
-	int	y_start;
-	int	y_end;
+	int		height;
+	int		y_start;
+	int		y_end;
+	double	d_height;
 
-	height = ((int)(WIN_HEIGHT / (ray->dist)));
-	if (height < 0)
-		height = 0;
+	d_height = WIN_HEIGHT / ray->dist;
+	if (d_height >= 0x2FFFFF - 2)
+		height = 0x2FFFFF - 2;
+	else
+		height = (int)d_height;
 	y_start = (WIN_HEIGHT - height) / 2;
 	y_end = y_start + height;
 	do_wall_ceil_floor(ctx, x, y_start, y_end);

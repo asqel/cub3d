@@ -6,7 +6,7 @@
 /*   By: axlleres <axlleres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 17:51:33 by axlleres          #+#    #+#             */
-/*   Updated: 2025/08/31 18:45:24 by axlleres         ###   ########.fr       */
+/*   Updated: 2025/09/05 20:19:16 by axlleres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ static int	convert(t_img_data *data, t_img *img)
 					* data->line_length + x * (data->bits_per_pixel >> 3));
 		offset += img->width;
 	}
-	img->limit = &img->data[img->width * img->height];
 	return (0);
 }
 

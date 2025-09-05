@@ -37,7 +37,7 @@ int	main(int argc, char **argv)
 	c3d_init(&ctx, argc, argv);
 	ctx.buffer = (uint32_t *)mlx_get_data_addr(ctx.mlx.backbuffer,
 			&argc, &argc, &argc);
-	ctx.p_y = 1.0000005;
+	//ctx.p_y = 1.0000005; // coordiinate of the devil !
 	mlx_hook(ctx.mlx.win, KeyPress, KeyPressMask, (void *)key_pressed, &ctx);
 	mlx_hook(ctx.mlx.win, KeyRelease, KeyReleaseMask,
 		(void *)key_released, &ctx);
